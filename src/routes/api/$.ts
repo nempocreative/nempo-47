@@ -111,8 +111,9 @@ export const Route = createFileRoute("/api/$")({
           : cfg.table === "site_settings" ? q : q.order("id", { ascending: true });
         const { data, error } = await q;
         if (error) {
+          // Lists degrade to empty so a missing/unreachable table never blanks the page.
           console.error(error);
-          return json({ error: "Gagal memuat data" }, 500);
+          return json([]);
         }
         return json((data ?? []).map(toCamel));
       },
