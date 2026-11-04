@@ -22,6 +22,7 @@
 ## Terbuka
 - [ ] Migrasi nempo-42: kode, foto/video dan struktur database sudah pindah — menunggu ekspor data lama & email admin.
 - [ ] Bumper 2: pusatkan logo dan tampilkan Tetap disini, Malam ini, Kita Joged Bareng satu per satu setelah logo MusiComedy, tidak bersamaan.
+- [x] Bumper 2: logo SADULI dikecilkan & digeser sedikit ke kanan; logo Kala Muda putih (latar dihapus) tampil di tengah setelah SADULI; MP4 direkam ulang dan tombol unduh diuji.
 - [x] Slide 34: cahaya menyapu dihapus, diganti cahaya berjalan keliling di tepi tiap bentuk; diverifikasi di pratinjau (slide 33 tetap sama).
 - [x] Slide 34: MP4 unduhan direkam ulang dari pratinjau — 900 frame penuh tanpa frame putih/kosong, tombol unduh terverifikasi menyajikan file baru.
 - [x] Slide 34: jarak antar kartu dilebarkan (gap 2.8cqw) sehingga kartu judul lagu tidak nempel ke pita REQUEST; pratinjau dan MP4 cocok.
