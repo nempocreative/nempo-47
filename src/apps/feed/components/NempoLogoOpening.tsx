@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Download, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import nempoLogo from '@/assets/nempo-bumper-logo-white.png';
@@ -9,7 +9,25 @@ import stayText from '@/assets/nempo-opening-stay.png';
 import tonightText from '@/assets/nempo-opening-tonight.png';
 import danceText from '@/assets/nempo-opening-dance.png';
 const music = '/audio/nempo-opening-gamelan.m4a';
-import video from '@/assets/nempo-opening-logo.mp4';
+import videoAsset from '@/assets/nempo-opening-logo.mp4.asset.json';
+
+const video = videoAsset.url;
+const fileName = 'NEMPO-Opening-Logo-1440x1080.mp4';
+
+async function downloadVideo(e: MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault();
+  try {
+    const res = await fetch(video);
+    if (!res.ok || !(res.headers.get('content-type') || '').includes('video')) throw new Error('bad response');
+    const url = URL.createObjectURL(new Blob([await res.arrayBuffer()], { type: 'video/mp4' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = fileName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  } catch {
+    window.location.href = video;
+  }
+}
 
 /** 12-second logo-only opening; animation and gamelan track share one timeline. */
 export function NempoLogoOpening() {
@@ -50,7 +68,7 @@ export function NempoLogoOpening() {
         <Button variant="outline" onClick={() => (muted ? restart(true) : (setMuted(true), audioRef.current?.pause()))}>
           {muted ? <Volume2 /> : <VolumeX />}{muted ? 'Putar dengan musik' : 'Matikan musik'}
         </Button>
-        <Button asChild><a href={video} download="NEMPO-Opening-Logo-1440x1080.mp4"><Download />Download MP4</a></Button>
+        <Button asChild><a href={video} download={fileName} onClick={downloadVideo}><Download />Download MP4</a></Button>
       </div>
       <div key={version} className={`nlo-stage${playing ? '' : ' is-paused'}`} aria-label="Opening logo NEMPO 4:3">
         <div className="nlo-glow" aria-hidden="true" />
