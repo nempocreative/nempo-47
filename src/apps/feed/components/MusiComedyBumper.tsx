@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { Download, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/musicomedy-night-logo.png';
@@ -11,7 +11,7 @@ import videoAsset from '@/assets/musicomedy-bumper.mp4.asset.json';
 const video = videoAsset.url;
 const fileName = 'MusiComedy-Night-Bumper-1440x1080.mp4';
 
-async function downloadVideo(e: React.MouseEvent<HTMLAnchorElement>) {
+async function downloadVideo(e: MouseEvent<HTMLAnchorElement>) {
   e.preventDefault();
   try {
     const res = await fetch(video);
