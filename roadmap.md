@@ -20,6 +20,7 @@
 - [x] Halaman 3 rundown: acuan dokumentasi — dua kolom berjarak dan bergaris pemisah, FOTO (sebelum acara, saat pertunjukan, wajib kepotret) di kiri dan VIDEO (sebelum acara, saat pertunjukan, video pendek reels & story) di kanan; kartu serah terima & unggah melebar di bawah, plus empat aturan; kalimatnya masih draf yang menunggu koreksi pemilik. Cetak = 3 halaman A5 mendatar (diverifikasi PDF).
 
 ## Terbuka
+- [ ] Migrasi nempo-42: kode, foto/video dan struktur database sudah pindah — menunggu ekspor data lama & email admin.
 - [ ] Bumper 2: pusatkan logo dan tampilkan Tetap disini, Malam ini, Kita Joged Bareng satu per satu setelah logo MusiComedy, tidak bersamaan.
 - [x] Slide 34: cahaya menyapu dihapus, diganti cahaya berjalan keliling di tepi tiap bentuk; diverifikasi di pratinjau (slide 33 tetap sama).
 - [x] Slide 34: MP4 unduhan direkam ulang dari pratinjau — 900 frame penuh tanpa frame putih/kosong, tombol unduh terverifikasi menyajikan file baru.
