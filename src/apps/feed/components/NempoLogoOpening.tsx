@@ -3,6 +3,7 @@ import { Download, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react
 import { Button } from '@/components/ui/button';
 import nempoLogo from '@/assets/nempo-bumper-logo-white.png';
 import saduliLogo from '@/assets/saduli-ragap-logo.png';
+import kalaMudaLogo from '@/assets/kala-muda-logo.png';
 import eventLogo from '@/assets/musicomedy-night-logo.png';
 import stayText from '@/assets/nempo-opening-stay.png';
 import tonightText from '@/assets/nempo-opening-tonight.png';
@@ -67,6 +68,7 @@ export function NempoLogoOpening() {
         <div className="nlo-sparks" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}</div>
         <div className="nlo-flash" aria-hidden="true" />
         <img className="nlo-sr" src={saduliLogo} alt="Saduli Ragap Entertainment" />
+        <img className="nlo-km" src={kalaMudaLogo} alt="Kala Muda" />
         <img className="nlo-logo" src={nempoLogo} alt="NEMPO" />
         <img className="nlo-event" src={eventLogo} alt="MusiComedy Night" />
         <img className="nlo-tagline nlo-tagline-stay" src={stayText} alt="Tetap disini" />
