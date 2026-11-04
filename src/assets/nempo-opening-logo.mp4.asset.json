@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "bcb6503d-c4e3-44c2-81b4-2d01eeaa1c39",
-  "project_id": "b82abb5d-4acd-440c-a66e-ccd68ed2d321",
-  "url": "/__l5e/assets-v1/bcb6503d-c4e3-44c2-81b4-2d01eeaa1c39/nempo-opening-logo.mp4",
-  "r2_key": "a/v1/b82abb5d-4acd-440c-a66e-ccd68ed2d321/bcb6503d-c4e3-44c2-81b4-2d01eeaa1c39/nempo-opening-logo.mp4",
-  "original_filename": "nempo-opening-logo.mp4",
-  "size": 4921720,
   "content_type": "video/mp4",
-  "created_at": "2026-11-04T10:03:25Z"
+  "created_at": "2026-11-04T10:03:25Z",
+  "original_filename": "nempo-opening-logo.mp4",
+  "project_id": "d7a05d69-c43d-4e9c-87ba-ee47e11e817b",
+  "r2_key": "a/v1/d7a05d69-c43d-4e9c-87ba-ee47e11e817b/bcb6503d-c4e3-44c2-81b4-2d01eeaa1c39/nempo-opening-logo.mp4",
+  "size": 4921720,
+  "url": "/__l5e/assets-v1/bcb6503d-c4e3-44c2-81b4-2d01eeaa1c39/nempo-opening-logo.mp4",
+  "version": 1
 }
