@@ -6,7 +6,27 @@ import logo from '@/assets/musicomedy-night-logo.png';
 import background from '@/assets/nempo-feed-slide-31-bg.jpg';
 import group from '@/assets/musicomedy-group.webp';
 import wayang from '@/assets/musicomedy-bumper-wayang.png';
-import video from '@/assets/musicomedy-bumper.mp4';
+import videoAsset from '@/assets/musicomedy-bumper.mp4.asset.json';
+
+const video = videoAsset.url;
+const fileName = 'MusiComedy-Night-Bumper-1440x1080.mp4';
+
+async function downloadVideo(e: React.MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault();
+  try {
+    const res = await fetch(video);
+    const type = res.headers.get('content-type') || '';
+    if (!res.ok || !type.includes('video')) throw new Error('bad response');
+    const blob = new Blob([await res.arrayBuffer()], { type: 'video/mp4' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = fileName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  } catch {
+    window.location.href = video;
+  }
+}
 import nempoLogo from '@/assets/nempo-bumper-logo-white.png';
 
 export function MusiComedyBumper() {
@@ -19,7 +39,7 @@ export function MusiComedyBumper() {
           {playing ? <Pause /> : <Play />}
         </Button>
         <Button variant="outline" size="icon" title="Putar ulang" aria-label="Putar ulang bumper" onClick={() => { setVersion(version + 1); setPlaying(true); }}><RotateCcw /></Button>
-        <Button asChild><a href={video} download="MusiComedy-Night-Bumper-1440x1080.mp4"><Download />Download MP4</a></Button>
+        <Button asChild><a href={video} download={fileName} onClick={downloadVideo}><Download />Download MP4</a></Button>
       </div>
       <div key={version} className={`mc-bumper-stage${playing ? '' : ' is-paused'}`} aria-label="Bumper MusiComedy Night 4:3">
         <img className="mc-bumper-backdrop" src={background} alt="" />
