@@ -9,19 +9,27 @@ import {
   CalendarDays,
   Camera,
   CheckCircle2,
+  Code2,
+  Footprints,
   GraduationCap,
   Instagram,
   Lightbulb,
   MapPin,
+  Megaphone,
+  Mic2,
   Music2,
   Palette,
+  School,
+  Sparkles,
   Users,
 } from "lucide-react";
 import communityHeroImage from "@/assets/komunitas-hero.jpg";
 import communityMusicImage from "@/assets/komunitas-musik.jpg";
 import communityArtImage from "@/assets/komunitas-seni.jpg";
 import communityCreatorImage from "@/assets/komunitas-kreator.jpg";
-import communityTalentImage from "@/assets/komunitas-talent.jpg";
+import communityWebImage from "@/assets/komunitas-webdev.jpg";
+import communityMarketingImage from "@/assets/komunitas-marketing.jpg";
+import { hobbyOptions, interestOptions, originOptions } from "@/data/community-recruitment";
 import kegiatanDapoer from "@/assets/kalamuda-kegiatan-dapoer-nyunda.webp";
 import kegiatanMakan from "@/assets/kalamuda-kegiatan-makan-bersama.webp";
 import kegiatanPodcast from "@/assets/kalamuda-kegiatan-podcast-malam.webp";
@@ -36,65 +44,94 @@ const kegiatanPhotos = [
   { src: kegiatanTari, caption: "Tari di MusiComedy Night", tag: "Tari" },
 ];
 
+// Kategori asal — sama dengan pilihan "Asal" di formulir pendaftaran.
 const focusAreas = [
   {
-    icon: Palette,
-    title: "Karya dan talenta",
+    icon: School,
+    title: "Sekolah",
     description:
-      "Tempat untuk memperkenalkan karya, mencoba ide baru, dan menemukan orang yang bisa diajak membuat sesuatu.",
+      "Pelajar SMP, SMA, atau SMK. Cukup tulis nama sekolahmu di formulir — mulai berkarya sejak sekarang.",
   },
   {
-    icon: CalendarDays,
-    title: "Acara yang dekat",
+    icon: GraduationCap,
+    title: "Kuliah / Univ",
     description:
-      "Dari panggung kecil sampai kegiatan bersama, selalu ada alasan untuk bertemu dan mengisi waktu dengan baik.",
+      "Mahasiswa dari kampus mana pun. Tulis nama kampusmu, lalu bawa ilmu dan idemu ke proyek nyata.",
   },
   {
-    icon: Lightbulb,
-    title: "Cerita dan peluang",
+    icon: Users,
+    title: "Umum",
     description:
-      "Belajar dari pengalaman orang lain, berbagi pengetahuan, dan membuka jalan untuk kolaborasi berikutnya.",
+      "Sudah bekerja, freelance, atau sedang cari kegiatan baru? Tetap boleh daftar dan ikut bergerak.",
   },
 ];
 
-const communityTracks = [
-  {
-    icon: Music2,
-    title: "Event dan panggung",
-    description:
-      "Musisi, performer, MC, dan tim di balik panggung yang ingin ikut membuat acara bersama Nempo.",
-    accent: "#b33a82",
-    tag: "Event",
-    image: communityMusicImage,
-  },
-  {
-    icon: Camera,
-    title: "Konten dan sosmed",
-    description:
-      "Content creator, fotografer, videografer, dan admin sosmed yang mau belajar bikin konten bareng.",
-    accent: "#2563c7",
-    tag: "Konten",
-    image: communityCreatorImage,
-  },
-  {
+// Pilihan minat — urutan & nama sama dengan pilihan "Minat" di formulir.
+type Track = {
+  icon: typeof Palette;
+  title: string;
+  description: string;
+  accent: string;
+  tag: string;
+  image: string;
+};
+
+const trackDetails: Record<(typeof interestOptions)[number], Omit<Track, "title">> = {
+  Designer: {
     icon: Palette,
-    title: "Desain kreatif",
-    description:
-      "Desainer grafis, ilustrator, dan pembuat karya visual untuk kebutuhan brand dan acara.",
+    description: "Desain grafis, ilustrasi, dan visual untuk poster, feed, serta kebutuhan brand dan acara.",
     accent: "#6e4bb4",
     tag: "Desain",
     image: communityArtImage,
   },
-  {
-    icon: GraduationCap,
-    title: "Talenta muda",
-    description:
-      "Anak muda berbakat yang ingin tampil, dilatih, dan disalurkan ke panggung serta proyek Nempo.",
-    accent: "#bd4d8b",
-    tag: "Talent",
-    image: communityTalentImage,
+  "Web Developer": {
+    icon: Code2,
+    description: "Bikin website dan aplikasi untuk event, UMKM, dan komunitas — dari tampilan sampai sistemnya.",
+    accent: "#1f7a6d",
+    tag: "Web",
+    image: communityWebImage,
   },
-];
+  "Content Creator": {
+    icon: Sparkles,
+    description: "Ide konten, naskah, dan tampil di depan kamera untuk Instagram, TikTok, dan podcast.",
+    accent: "#bd4d8b",
+    tag: "Konten",
+    image: kegiatanPodcast,
+  },
+  "Videografer dan Fotographer": {
+    icon: Camera,
+    description: "Dokumentasi acara, foto produk, dan video highlight — belajar langsung di lapangan.",
+    accent: "#2563c7",
+    tag: "Visual",
+    image: communityCreatorImage,
+  },
+  Marketing: {
+    icon: Megaphone,
+    description: "Strategi promosi, sosmed, dan kerja sama sponsor supaya acara dan karya dikenal lebih luas.",
+    accent: "#c2581f",
+    tag: "Promosi",
+    image: communityMarketingImage,
+  },
+  "Event Management": {
+    icon: CalendarDays,
+    description: "Rundown, koordinasi tim, dan panggung — jadi bagian dari tim di balik acara Nempo.",
+    accent: "#b33a82",
+    tag: "Event",
+    image: communityMusicImage,
+  },
+};
+
+const communityTracks: Track[] = interestOptions.map((title) => ({
+  title,
+  ...trackDetails[title],
+}));
+
+const hobbyIcons: Record<string, typeof Palette> = {
+  Tari: Footprints,
+  Bernyanyi: Mic2,
+  Musik: Music2,
+  Lainnya: Lightbulb,
+};
 
 const waysToJoin = [
   {
@@ -117,16 +154,7 @@ const waysToJoin = [
   },
 ];
 
-const marqueeWords = [
-  "Karya",
-  "Event",
-  "Kolaborasi",
-  "Peluang",
-  "Cerita",
-  "Komunitas",
-  "Musik",
-  "Seni",
-];
+const marqueeWords = [...interestOptions, ...hobbyOptions.filter((h) => h !== "Lainnya")];
 
 export default function KomunitasPage() {
   return (
@@ -188,9 +216,9 @@ export default function KomunitasPage() {
               </div>
               <dl className="mt-9 grid max-w-md grid-cols-3 gap-4 border-t border-[#d8def5] pt-6 sm:mt-10">
                 {[
-                  { value: "4", label: "Ruang minat" },
-                  { value: "12+", label: "Kegiatan tiap tahun" },
-                  { value: "1", label: "Rumah bersama" },
+                  { value: String(interestOptions.length), label: "Pilihan minat" },
+                  { value: String(originOptions.length), label: "Kategori asal" },
+                  { value: "0", label: "Biaya daftar" },
                 ].map((stat) => (
                   <div key={stat.label}>
                     <dt className="sr-only">{stat.label}</dt>
@@ -261,6 +289,11 @@ export default function KomunitasPage() {
 
         {/* ===== FOCUS AREAS ===== */}
         <section className="border-b border-[#e3dcd3] bg-white">
+          <div className="mx-auto max-w-7xl px-4 pt-9 sm:px-6 lg:px-8">
+            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
+              Siapa yang bisa daftar
+            </span>
+          </div>
           <div className="mx-auto grid max-w-7xl gap-px bg-[#dfe5f8] px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
             {focusAreas.map((area, index) => (
               <article
@@ -292,19 +325,19 @@ export default function KomunitasPage() {
             <div className="flex flex-col gap-5 border-b border-[#dedff5] pb-8 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
-                  Ruang minat
+                  Pilihan minat
                 </span>
                 <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight tracking-[-0.035em] text-[#37215b] sm:text-3xl lg:text-4xl">
-                  Ada banyak cara untuk ikut bergerak.
+                  Pilih minatmu saat mendaftar.
                 </h2>
               </div>
               <p className="max-w-sm text-sm leading-6 text-[#62677c]">
-                Tidak harus punya komunitas sendiri. Mulai saja dari hal yang
-                kamu suka, lalu lihat siapa yang bisa diajak jalan bersama.
+                Enam pilihan ini sama persis dengan pilihan minat di formulir.
+                Pilih yang paling dekat denganmu — belum ahli juga tidak apa-apa.
               </p>
             </div>
 
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {communityTracks.map((track, index) => (
                 <article
                   key={track.title}
@@ -370,13 +403,42 @@ export default function KomunitasPage() {
                     <p className="mt-2 text-sm leading-6 text-[#62677c]">
                       {track.description}
                     </p>
-                    <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#aaa9bf] transition group-hover:text-[#a62f78]">
-                      Segera hadir
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                    </div>
+                    <a
+                      href="#gabung"
+                      className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[#a62f78] transition hover:gap-2"
+                    >
+                      Daftar sebagai {track.title}
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </a>
                   </div>
                 </article>
               ))}
+            </div>
+
+            {/* Hobi — sama dengan pilihan "Hobi" di formulir */}
+            <div className="mt-10 flex flex-col gap-4 rounded-3xl border border-[#dedff5] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
+                  Punya hobi?
+                </p>
+                <p className="mt-1 text-sm font-semibold text-[#3f3564]">
+                  Ceritakan juga di formulir — boleh pilih lebih dari satu.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {hobbyOptions.map((hobby) => {
+                  const Icon = hobbyIcons[hobby] ?? Lightbulb;
+                  return (
+                    <span
+                      key={hobby}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-[#f5f0ff] px-3.5 py-2 text-xs font-bold text-[#37215b]"
+                    >
+                      <Icon className="h-3.5 w-3.5 text-[#a62f78]" />
+                      {hobby === "Lainnya" ? "Lainnya (isi sendiri)" : hobby}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -474,7 +536,7 @@ export default function KomunitasPage() {
               <h2 className="mt-2 max-w-md text-2xl font-black leading-tight tracking-[-0.04em] text-[#37215b] sm:text-3xl lg:text-4xl">
                 Daftar jadi bagian
                 <br />
-                <span className="text-[#a62f78]">Nempo Community.</span>
+                <span className="text-[#a62f78]">Kala Muda Community.</span>
               </h2>
               <p className="mt-4 max-w-md text-sm leading-7 text-[#62677c]">
                 Isi formulir singkat ini dan ceritakan minatmu. Tim kami akan
@@ -482,10 +544,10 @@ export default function KomunitasPage() {
               </p>
               <ul className="mt-6 space-y-3">
                 {[
-                  "Terbuka untuk pelajar, mahasiswa, dan umum",
-                  "Tanpa biaya pendaftaran",
-                  "Boleh daftar lebih dari satu minat nanti",
-                  "Pilih asal: sekolah, kuliah, atau umum — plus hobimu",
+                  "Asal: Sekolah, Kuliah / Univ, atau Umum",
+                  `Pilih satu dari ${interestOptions.length} minat: ${interestOptions.join(", ")}`,
+                  "Hobi boleh lebih dari satu: Tari, Bernyanyi, Musik, atau isi sendiri",
+                  "Tanpa biaya — isian langsung terkirim ke WhatsApp tim kami",
                 ].map((point) => (
                   <li
                     key={point}
