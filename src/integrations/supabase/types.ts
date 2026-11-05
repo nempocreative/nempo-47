@@ -141,6 +141,8 @@ export type Database = {
           full_name: string
           id: number
           interest: string
+          origin_name: string | null
+          origin_type: string | null
           reason: string | null
           whatsapp: string
         }
@@ -150,6 +152,8 @@ export type Database = {
           full_name: string
           id?: number
           interest: string
+          origin_name?: string | null
+          origin_type?: string | null
           reason?: string | null
           whatsapp: string
         }
@@ -159,6 +163,8 @@ export type Database = {
           full_name?: string
           id?: number
           interest?: string
+          origin_name?: string | null
+          origin_type?: string | null
           reason?: string | null
           whatsapp?: string
         }
