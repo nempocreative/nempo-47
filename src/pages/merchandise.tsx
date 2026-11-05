@@ -3,10 +3,10 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
 import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
-import lapDepan from "@/assets/rompi-lapangan-depan.webp.asset.json";
-import lapBelakang from "@/assets/rompi-lapangan-belakang.webp.asset.json";
-import nmpDepan from "@/assets/rompi-nempo-depan.webp.asset.json";
-import nmpBelakang from "@/assets/rompi-nempo-belakang.webp.asset.json";
+import lapDepan from "@/assets/rompi-manekin-lapangan-depan.webp";
+import lapBelakang from "@/assets/rompi-manekin-lapangan-belakang.webp";
+import nmpDepan from "@/assets/rompi-manekin-nempo-depan.webp";
+import nmpBelakang from "@/assets/rompi-manekin-nempo-belakang.webp";
 import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo-v2.jpg";
 
 const products = [
