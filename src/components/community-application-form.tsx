@@ -3,7 +3,7 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle2, Loader2, MessageCircle, Send } from "lucide-react";
 import { NEMPO_WA_NUMBER } from "@/lib/contact";
-import { applicationWaUrl, interestOptions } from "@/data/community-recruitment";
+import { applicationWaUrl, interestOptions, originOptions } from "@/data/community-recruitment";
 
 const applicationSchema = z.object({
   full_name: z
@@ -21,11 +21,28 @@ const applicationSchema = z.object({
     .trim()
     .regex(/^[0-9+\-\s]{9,16}$/, "Nomor WhatsApp belum benar"),
   interest: z.string().min(1, "Pilih salah satu minat"),
+  origin_type: z.string().min(1, "Pilih salah satu asal"),
+  origin_name: z
+    .string()
+    .trim()
+    .max(150, "Nama asal maksimal 150 karakter")
+    .optional(),
   reason: z
     .string()
     .trim()
     .max(1000, "Cerita maksimal 1000 karakter")
     .optional(),
+}).superRefine((data, ctx) => {
+  if (data.origin_type !== "Umum" && data.origin_type && !data.origin_name) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["origin_name"],
+      message:
+        data.origin_type === "Sekolah"
+          ? "Isi nama sekolahmu"
+          : "Isi nama kampusmu",
+    });
+  }
 });
 
 type ApplicationForm = z.infer<typeof applicationSchema>;
@@ -35,7 +52,16 @@ const emptyForm: ApplicationForm = {
   email: "",
   whatsapp: "",
   interest: "",
+  origin_type: "",
+  origin_name: "",
   reason: "",
+};
+
+/** Label dan contoh isian nama asal sesuai kategori yang dipilih. */
+const originNameLabel: Record<string, { label: string; placeholder: string }> = {
+  Sekolah: { label: "Nama sekolah", placeholder: "Contoh: SMAN 1 Garut" },
+  Kuliah: { label: "Nama kampus", placeholder: "Contoh: Universitas Garut" },
+  Umum: { label: "Asal (opsional)", placeholder: "Contoh: Garut Kota / instansi tempat bekerja" },
 };
 
 const inputClass =
