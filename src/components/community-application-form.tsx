@@ -3,7 +3,7 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle2, Loader2, MessageCircle, Send } from "lucide-react";
 import { NEMPO_WA_NUMBER } from "@/lib/contact";
-import { applicationWaUrl, interestOptions, originOptions } from "@/data/community-recruitment";
+import { applicationWaUrl, hobbyOptions, interestOptions, originOptions } from "@/data/community-recruitment";
 
 const applicationSchema = z.object({
   full_name: z
@@ -27,6 +27,8 @@ const applicationSchema = z.object({
     .trim()
     .max(150, "Nama asal maksimal 150 karakter")
     .optional(),
+  hobby: z.string().min(1, "Pilih salah satu hobi"),
+  hobby_other: z.string().trim().max(100, "Hobi maksimal 100 karakter").optional(),
   reason: z
     .string()
     .trim()
@@ -43,6 +45,9 @@ const applicationSchema = z.object({
           : "Isi nama kampusmu",
     });
   }
+  if (data.hobby === "Lainnya" && !data.hobby_other) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["hobby_other"], message: "Tulis hobimu" });
+  }
 });
 
 type ApplicationForm = z.infer<typeof applicationSchema>;
@@ -54,6 +59,8 @@ const emptyForm: ApplicationForm = {
   interest: "",
   origin_type: "",
   origin_name: "",
+  hobby: "",
+  hobby_other: "",
   reason: "",
 };
 
@@ -103,7 +110,8 @@ export function CommunityApplicationForm() {
       return;
     }
 
-    const url = applicationWaUrl(parsed.data);
+    const hobby = parsed.data.hobby === "Lainnya" ? parsed.data.hobby_other || "" : parsed.data.hobby;
+    const url = applicationWaUrl({ ...parsed.data, hobby });
     setWaUrl(url);
     // Dibuka di sini, masih dalam gestur klik, supaya tidak diblokir peramban.
     window.open(url, "_blank", "noopener,noreferrer");
@@ -117,6 +125,7 @@ export function CommunityApplicationForm() {
       reason: parsed.data.reason || null,
       origin_type: parsed.data.origin_type,
       origin_name: parsed.data.origin_name || null,
+      hobby,
     });
     setSubmitting(false);
     setArchived(!error);
@@ -267,6 +276,49 @@ export function CommunityApplicationForm() {
                   />
                   {errors.origin_name && (
                     <p className="mt-1.5 text-xs font-semibold text-[#c2274f]">{errors.origin_name}</p>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="sm:col-span-2">
+              <span className={labelClass}>Hobi</span>
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                {hobbyOptions.map((option) => {
+                  const active = form.hobby === option;
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => updateField("hobby", option)}
+                      className={`rounded-2xl border px-3 py-3 text-center text-xs font-bold transition sm:text-sm ${
+                        active
+                          ? "border-[#a62f78] bg-[#a62f78] text-white shadow-md shadow-[#a62f78]/20"
+                          : "border-[#d8def5] bg-[#faf9ff] text-[#37215b] hover:border-[#a62f78]/40"
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+              {errors.hobby && (
+                <p className="mt-1.5 text-xs font-semibold text-[#c2274f]">{errors.hobby}</p>
+              )}
+              {form.hobby === "Lainnya" && (
+                <div className="mt-3">
+                  <label htmlFor="hobby_other" className={labelClass}>Tulis hobimu</label>
+                  <input
+                    id="hobby_other"
+                    type="text"
+                    value={form.hobby_other}
+                    onChange={(e) => updateField("hobby_other", e.target.value)}
+                    placeholder="Contoh: Melukis, Teater, Olahraga"
+                    className={inputClass}
+                    maxLength={100}
+                  />
+                  {errors.hobby_other && (
+                    <p className="mt-1.5 text-xs font-semibold text-[#c2274f]">{errors.hobby_other}</p>
                   )}
                 </div>
               )}

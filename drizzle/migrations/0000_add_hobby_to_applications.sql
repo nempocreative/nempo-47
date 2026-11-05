@@ -1,0 +1,1 @@
+ALTER TABLE public.community_applications ADD COLUMN IF NOT EXISTS hobby text;
