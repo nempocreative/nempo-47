@@ -462,6 +462,7 @@ export default function KomunitasPage() {
                   "Terbuka untuk pelajar, mahasiswa, dan umum",
                   "Tanpa biaya pendaftaran",
                   "Boleh daftar lebih dari satu minat nanti",
+                  "Pilih asal: sekolah, kuliah, atau umum — plus hobimu",
                 ].map((point) => (
                   <li
                     key={point}
