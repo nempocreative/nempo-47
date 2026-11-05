@@ -2,6 +2,28 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
 import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
+import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo.jpg";
+
+const products = [
+  {
+    name: "Rompi Lapangan Nempo",
+    image: rompiLapanganImage,
+    desc: "Rompi crew lapangan dengan webbing modular, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
+    features: [
+      "Holster HT di dada + kantong HP",
+      "Slot pulpen/spidol, gantungan lakban dan D-ring karabiner",
+      "Kantong kargo besar + kantong botol jaring di samping",
+      "Webbing modular depan-belakang + pouch punggung",
+      "Strip reflektif buat kerja malam",
+    ],
+  },
+  {
+    name: "Rompi Nempo",
+    image: rompiImage,
+    desc: "Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang \"n\" besar di punggung, ditemani logo kecil KALA MUDA.",
+    features: ["Kantong depan + saku ritsleting", "Strap samping bisa disesuaikan", "Lapisan dalam jaring, adem dipakai"],
+  },
+];
 
 export default function MerchandisePage() {
   return (
@@ -18,18 +40,15 @@ export default function MerchandisePage() {
           Pakai bareng anggota dan pendukung komunitas — di event, kegiatan, atau nongkrong sehari-hari.
         </p>
 
-        <article className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1.4fr_1fr]">
-          <img src={rompiImage} alt="Rompi Nempo tampak depan dan belakang" width={1280} height={960} loading="lazy" className="h-full w-full bg-[#eef0f3] object-cover" />
+        {products.map((p) => (
+        <article key={p.name} className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1.4fr_1fr]">
+          <img src={p.image} alt={`${p.name} tampak depan dan belakang`} width={1280} height={960} loading="lazy" className="h-full w-full bg-[#eef0f3] object-cover" />
           <div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
             <span className="w-fit rounded-full bg-[#182b39] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">Segera hadir</span>
-            <h2 className="text-2xl font-black text-[#182b39]">Rompi Nempo</h2>
-            <p className="text-sm leading-6 text-[#5f6b6f]">
-              Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang "n" besar di punggung, ditemani logo kecil KALA MUDA. Banyak kantong, pas buat crew dan anggota komunitas.
-            </p>
+            <h2 className="text-2xl font-black text-[#182b39]">{p.name}</h2>
+            <p className="text-sm leading-6 text-[#5f6b6f]">{p.desc}</p>
             <ul className="space-y-1.5 text-sm text-[#182b39]">
-              <li>• Kantong depan + saku ritsleting</li>
-              <li>• Strap samping bisa disesuaikan</li>
-              <li>• Lapisan dalam jaring, adem dipakai</li>
+              {p.features.map((f) => <li key={f}>• {f}</li>)}
             </ul>
             <div className="mt-2 flex flex-col gap-2 sm:flex-row">
               <Link href="/komunitas" className="inline-flex justify-center rounded-full bg-[#a62f78] px-5 py-3 text-sm font-bold text-white hover:bg-[#862761]">
@@ -41,6 +60,7 @@ export default function MerchandisePage() {
             </div>
           </div>
         </article>
+        ))}
       </section>
     </Layout>
   );
