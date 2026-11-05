@@ -9,19 +9,27 @@ import {
   CalendarDays,
   Camera,
   CheckCircle2,
+  Code2,
+  Footprints,
   GraduationCap,
   Instagram,
   Lightbulb,
   MapPin,
+  Megaphone,
+  Mic2,
   Music2,
   Palette,
+  School,
+  Sparkles,
   Users,
 } from "lucide-react";
 import communityHeroImage from "@/assets/komunitas-hero.jpg";
 import communityMusicImage from "@/assets/komunitas-musik.jpg";
 import communityArtImage from "@/assets/komunitas-seni.jpg";
 import communityCreatorImage from "@/assets/komunitas-kreator.jpg";
-import communityTalentImage from "@/assets/komunitas-talent.jpg";
+import communityWebImage from "@/assets/komunitas-webdev.jpg";
+import communityMarketingImage from "@/assets/komunitas-marketing.jpg";
+import { hobbyOptions, interestOptions, originOptions } from "@/data/community-recruitment";
 import kegiatanDapoer from "@/assets/kalamuda-kegiatan-dapoer-nyunda.webp";
 import kegiatanMakan from "@/assets/kalamuda-kegiatan-makan-bersama.webp";
 import kegiatanPodcast from "@/assets/kalamuda-kegiatan-podcast-malam.webp";
@@ -59,7 +67,16 @@ const focusAreas = [
 ];
 
 // Pilihan minat — urutan & nama sama dengan pilihan "Minat" di formulir.
-const trackDetails: Record<(typeof interestOptions)[number], Omit<(typeof communityTracks)[number], "title">> = {
+type Track = {
+  icon: typeof Palette;
+  title: string;
+  description: string;
+  accent: string;
+  tag: string;
+  image: string;
+};
+
+const trackDetails: Record<(typeof interestOptions)[number], Omit<Track, "title">> = {
   Designer: {
     icon: Palette,
     description: "Desain grafis, ilustrasi, dan visual untuk poster, feed, serta kebutuhan brand dan acara.",
@@ -104,18 +121,9 @@ const trackDetails: Record<(typeof interestOptions)[number], Omit<(typeof commun
   },
 };
 
-type Track = {
-  icon: typeof Palette;
-  title: string;
-  description: string;
-  accent: string;
-  tag: string;
-  image: string;
-};
-
 const communityTracks: Track[] = interestOptions.map((title) => ({
   title,
-  ...(trackDetails as Record<string, Omit<Track, "title">>)[title],
+  ...trackDetails[title],
 }));
 
 const hobbyIcons: Record<string, typeof Palette> = {
