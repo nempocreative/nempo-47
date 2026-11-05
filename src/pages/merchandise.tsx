@@ -6,7 +6,7 @@ import { Shirt } from "lucide-react";
 export default function MerchandisePage() {
   return (
     <Layout>
-      <SEO title="Merchandise Nempo Organizer" noIndex />
+      <SEO title="Merchandise Komunitas Kala Muda" noIndex />
       <SedangDipersiapkan
         icon={Shirt}
         iconGradient="linear-gradient(135deg, #0172B1, #1BA0E2)"
@@ -14,11 +14,11 @@ export default function MerchandisePage() {
         dotColor2="#7DD3FC"
         title="Sedang Dipersiapkan"
         titleHighlight="Penuh Semangat"
-        description="Merchandise resmi Nempo Organizer — kaos, topi, tumbler, dan aksesoris kece lainnya. Segera hadir."
-        btn1Label="Jelajahi Wisata Alam"
-        btn1Href="/wisata"
-        btn2Label="Cek Oleh-oleh"
-        btn2Href="/sentra-oleh-oleh"
+        description="Merchandise resmi komunitas Kala Muda × Nempo — kaos, topi, tumbler, dan aksesoris kece buat anggota dan pendukung komunitas. Segera hadir."
+        btn1Label="Gabung Komunitas"
+        btn1Href="/komunitas"
+        btn2Label="Daftar Recruitment"
+        btn2Href="/recruitment"
       />
     </Layout>
   );

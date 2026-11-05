@@ -120,6 +120,15 @@ function ServiceArt({ id }: ServiceArtProps) {
           <path d="m50 9 1.2 3 3 1.2-3 1.3-1.2 3-1.3-3-3-1.3 3-1.2 1.3-3Z" fill={gold} stroke={outline} strokeWidth="1" />
         </>
       );
+    case "merchandise-komunitas":
+      return (
+        <>
+          <ellipse cx="32" cy="57" rx="17" ry="3" fill="#633F7C" opacity=".18" />
+          <path d="M24 12 12 18l-4 11 8 3 3-5v25h26V27l3 5 8-3-4-11-12-6c-1 4-4 6-8 6s-7-2-8-6Z" fill="#FCE7F3" stroke={outline} strokeWidth="2.1" strokeLinejoin="round" />
+          <path d="M26 30h12M26 36h8" stroke="#A62F78" strokeWidth="2.4" strokeLinecap="round" />
+          <path d="m50 8 1.2 3 3 1.2-3 1.3-1.2 3-1.3-3-3-1.3 3-1.2 1.3-3Z" fill={gold} stroke={outline} strokeWidth="1" />
+        </>
+      );
     default:
       return null;
   }
