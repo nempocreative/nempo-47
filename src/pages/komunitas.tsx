@@ -417,11 +417,7 @@ export default function KomunitasPage() {
               </a>
             </div>
           </div>
-        </section>
-
-        {/* ===== KEGIATAN ===== */}
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8">
+          <div className="relative mx-auto max-w-7xl px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8">
             <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
               Kegiatan
             </span>
