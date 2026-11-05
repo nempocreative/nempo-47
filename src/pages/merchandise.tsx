@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
@@ -25,6 +26,37 @@ const products = [
   },
 ];
 
+function VestSpinner({ image, name }: { image: string; name: string }) {
+  const [paused, setPaused] = useState(false);
+  const face = (side: "front" | "back") => (
+    <div
+      className={`merch-face merch-${side}`}
+      role="img"
+      aria-label={`${name} tampak ${side === "front" ? "depan" : "belakang"}`}
+      style={{ backgroundImage: `url(${image})`, backgroundPosition: side === "front" ? "0% 50%" : "100% 50%" }}
+    />
+  );
+  return (
+    <div className="relative flex flex-col items-center bg-gradient-to-b from-[#d8d8d8] to-[#e1e1e1] px-6 pb-5 pt-8">
+      <button
+        type="button"
+        onClick={() => setPaused((v) => !v)}
+        className="merch-stage"
+        aria-label={paused ? "Putar lagi rompi" : "Hentikan putaran rompi"}
+      >
+        <div className={`merch-spin ${paused ? "is-paused" : ""}`}>
+          {face("front")}
+          {face("back")}
+        </div>
+        <span aria-hidden className="merch-shadow" />
+      </button>
+      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6b7280]">
+        {paused ? "Ketuk untuk memutar" : "Ketuk untuk berhenti"}
+      </p>
+    </div>
+  );
+}
+
 export default function MerchandisePage() {
   return (
     <Layout>
@@ -41,8 +73,8 @@ export default function MerchandisePage() {
         </p>
 
         {products.map((p) => (
-        <article key={p.name} className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1.4fr_1fr]">
-          <img src={p.image} alt={`${p.name} tampak depan dan belakang`} width={1280} height={960} loading="lazy" className="h-full w-full bg-[#eef0f3] object-cover" />
+        <article key={p.name} className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1fr_1fr] md:items-center">
+          <VestSpinner image={p.image} name={p.name} />
           <div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
             <span className="w-fit rounded-full bg-[#182b39] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">Segera hadir</span>
             <h2 className="text-2xl font-black text-[#182b39]">{p.name}</h2>
@@ -62,6 +94,17 @@ export default function MerchandisePage() {
         </article>
         ))}
       </section>
+      <style>{`
+        .merch-stage { perspective: 1400px; width: min(78vw, 300px); aspect-ratio: 2 / 3; position: relative; cursor: pointer; background: none; border: 0; padding: 0; }
+        .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 7s cubic-bezier(.45,0,.55,1) infinite; }
+        .merch-spin.is-paused { animation-play-state: paused; }
+        .merch-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: 200% auto; background-repeat: no-repeat; }
+        .merch-back { transform: rotateY(180deg); }
+        .merch-shadow { position: absolute; left: 18%; right: 18%; bottom: -10px; height: 14px; border-radius: 50%; background: rgba(24,43,57,.22); filter: blur(6px); animation: merch-shadow 3.5s ease-in-out infinite; }
+        @keyframes merch-rotate { 0%,18% { transform: rotateY(0deg); } 50%,68% { transform: rotateY(180deg); } 100% { transform: rotateY(360deg); } }
+        @keyframes merch-shadow { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.6); opacity:.6; } }
+        @media (prefers-reduced-motion: reduce) { .merch-spin, .merch-shadow { animation: none; } }
+      `}</style>
     </Layout>
   );
 }
