@@ -1872,7 +1872,7 @@ export default function Home() {
         <section className="home-section-upcoming relative">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-primary text-primary-foreground">
-              <CalendarDays className="w-5 h-5" strokeWidth={1.75} />
+              {eventFinished ? <History className="w-5 h-5" strokeWidth={1.75} /> : <CalendarDays className="w-5 h-5" strokeWidth={1.75} />}
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-foreground font-black text-base leading-tight">{eventFinished ? "Riwayat Event" : "Event Mendatang"}</h2>
