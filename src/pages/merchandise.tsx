@@ -39,7 +39,7 @@ const LAYERS = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
 function VestSpinner({ front, back, name }: { front: string; back: string; name: string }) {
   const [paused, setPaused] = useState(false);
   return (
-    <div className="merch-scene relative flex flex-col items-center overflow-hidden px-6 pb-5 pt-8">
+    <div className="merch-scene relative flex flex-col items-center overflow-hidden px-6 pb-6 pt-14">
       <span aria-hidden className="merch-glow" />
       <button
         type="button"
