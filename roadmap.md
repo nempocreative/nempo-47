@@ -53,4 +53,4 @@
 - [ ] Bumper 2: logo SADULI digeser ke kiri (left 48%) sesuai arahan
 - [ ] Bumper 2: kemunculan logo Kala Muda diperlambat (muncul ~2.5 s)
 - [ ] Bumper 2: rekam ulang MP4 unduhan setelah perubahan logo
-- [ ] Event selesai otomatis masuk ke card riwayat
+- [x] Event selesai otomatis masuk ke card riwayat (home: heading Riwayat Event + badge Selesai; /event: bagian Event Selesai); baris event MusiComedy Night direstore ke database
