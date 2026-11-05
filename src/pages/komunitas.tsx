@@ -325,15 +325,15 @@ export default function KomunitasPage() {
             <div className="flex flex-col gap-5 border-b border-[#dedff5] pb-8 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
-                  Ruang minat
+                  Pilihan minat
                 </span>
                 <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight tracking-[-0.035em] text-[#37215b] sm:text-3xl lg:text-4xl">
-                  Ada banyak cara untuk ikut bergerak.
+                  Pilih minatmu saat mendaftar.
                 </h2>
               </div>
               <p className="max-w-sm text-sm leading-6 text-[#62677c]">
-                Tidak harus punya komunitas sendiri. Mulai saja dari hal yang
-                kamu suka, lalu lihat siapa yang bisa diajak jalan bersama.
+                Enam pilihan ini sama persis dengan pilihan minat di formulir.
+                Pilih yang paling dekat denganmu — belum ahli juga tidak apa-apa.
               </p>
             </div>
 
