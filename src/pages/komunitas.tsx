@@ -260,7 +260,7 @@ export default function KomunitasPage() {
                   </span>
                 </figcaption>
               </figure>
-              <div className="absolute -right-2 -top-4 rounded-2xl border border-[#d8cfee] bg-white px-3.5 py-3 shadow-lg shadow-[#3d2a71]/10 sm:-right-6 sm:-top-6 sm:px-5">
+              <div className="absolute right-3 -top-4 rounded-2xl border border-[#d8cfee] bg-white px-3.5 py-3 shadow-lg shadow-[#3d2a71]/10 sm:-right-6 sm:-top-6 sm:px-5">
                 <p className="text-[9px] font-bold uppercase tracking-[0.17em] text-[#a62f78]">
                   Bukan penonton
                 </p>
@@ -337,11 +337,11 @@ export default function KomunitasPage() {
               </p>
             </div>
 
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="-mx-4 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
               {communityTracks.map((track, index) => (
                 <article
                   key={track.title}
-                  className="group relative overflow-hidden rounded-3xl bg-white shadow-[0_8px_25px_rgba(61,42,113,.07)] transition hover:-translate-y-1.5 hover:shadow-[0_20px_45px_rgba(61,42,113,.15)]"
+                  className="group relative w-[82%] shrink-0 snap-center sm:w-auto overflow-hidden rounded-3xl bg-white shadow-[0_8px_25px_rgba(61,42,113,.07)] transition hover:-translate-y-1.5 hover:shadow-[0_20px_45px_rgba(61,42,113,.15)]"
                 >
                   {track.image ? (
                     <div className="relative h-36 overflow-hidden">
