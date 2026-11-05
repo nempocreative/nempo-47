@@ -5,10 +5,10 @@ import { Link } from "@/lib/wouter";
 
 // Foto putaran 360°: 8 sudut (0°, 45°, …, 315°) rompi yang dipakai manekin.
 const lapanganFrames = Object.values(
-  import.meta.glob<string>("@/assets/rompi-putar-lapangan-*.webp", { eager: true, import: "default" }),
+  import.meta.glob<string>("/src/assets/rompi-putar-lapangan-*.webp", { eager: true, import: "default" }),
 );
 const nempoFrames = Object.values(
-  import.meta.glob<string>("@/assets/rompi-putar-nempo-*.webp", { eager: true, import: "default" }),
+  import.meta.glob<string>("/src/assets/rompi-putar-nempo-*.webp", { eager: true, import: "default" }),
 );
 
 const products = [
