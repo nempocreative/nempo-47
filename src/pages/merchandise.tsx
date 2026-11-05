@@ -34,7 +34,13 @@ const products = [
   },
 ];
 
-const LAYERS = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+// Lapisan siluet berbentuk lonjong (bukan balok) supaya badan manekin terlihat bulat saat berputar.
+const DEPTH = 26;
+const LAYERS = Array.from({ length: 20 }, (_, i) => {
+  const z = -DEPTH + (i * (2 * DEPTH)) / 19;
+  const round = Math.sqrt(Math.max(0, 1 - (z / (DEPTH + 4)) ** 2));
+  return { z, scale: 0.6 + 0.4 * round };
+});
 
 function VestSpinner({ front, back, name }: { front: string; back: string; name: string }) {
   const [paused, setPaused] = useState(false);
@@ -49,8 +55,8 @@ function VestSpinner({ front, back, name }: { front: string; back: string; name:
       >
         <div className="merch-float">
           <div className={`merch-spin ${paused ? "is-paused" : ""}`}>
-            {LAYERS.map((z) => (
-              <img key={z} src={front} alt="" aria-hidden className="merch-face merch-edge" style={{ transform: `translateZ(${z}px)` }} />
+            {LAYERS.map(({ z, scale }) => (
+              <img key={z} src={front} alt="" aria-hidden className="merch-face merch-edge" style={{ transform: `translateZ(${z}px) scaleX(${scale})` }} />
             ))}
             <img src={front} alt={`${name} tampak depan`} className="merch-face merch-front" />
             <img src={back} alt={`${name} tampak belakang`} className="merch-face merch-back" />
@@ -110,9 +116,9 @@ export default function MerchandisePage() {
         .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 9s linear infinite; }
         .merch-spin.is-paused, .merch-scene:has(.is-paused) .merch-float { animation-play-state: paused; }
         .merch-face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-        .merch-edge { filter: brightness(.18) saturate(.6); }
-        .merch-front { transform: translateZ(6px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-        .merch-back { transform: rotateY(180deg) translateZ(6px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .merch-edge { filter: brightness(0) invert(.09); }
+        .merch-front { transform: translateZ(28px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .merch-back { transform: rotateY(180deg) translateZ(28px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .merch-shadow { position: absolute; left: 20%; right: 20%; bottom: -14px; height: 16px; border-radius: 50%; background: rgba(0,0,0,.55); filter: blur(8px); animation: merch-shadow 4s ease-in-out infinite; }
         @keyframes merch-rotate { from { transform: rotateX(-6deg) rotateY(0deg); } to { transform: rotateX(-6deg) rotateY(360deg); } }
         @keyframes merch-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
