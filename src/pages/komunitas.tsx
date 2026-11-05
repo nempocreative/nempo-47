@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
 import { CommunityApplicationForm } from "@/components/community-application-form";
+import { KegiatanSlider } from "@/components/kegiatan-slider";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -28,11 +29,11 @@ import kegiatanAkustik from "@/assets/kalamuda-kegiatan-akustik.webp";
 import kegiatanTari from "@/assets/kalamuda-kegiatan-tari-musicomedy.webp";
 
 const kegiatanPhotos = [
-  { src: kegiatanDapoer, caption: "Dapoer Nyunda" },
-  { src: kegiatanMakan, caption: "Makan bersama" },
-  { src: kegiatanPodcast, caption: "Rekaman podcast malam" },
-  { src: kegiatanAkustik, caption: "Jamming akustik" },
-  { src: kegiatanTari, caption: "Tari di MusiComedy Night" },
+  { src: kegiatanDapoer, caption: "Dapoer Nyunda", tag: "Kuliner" },
+  { src: kegiatanMakan, caption: "Makan bersama", tag: "Kebersamaan" },
+  { src: kegiatanPodcast, caption: "Rekaman podcast malam", tag: "Kreator" },
+  { src: kegiatanAkustik, caption: "Jamming akustik", tag: "Musik" },
+  { src: kegiatanTari, caption: "Tari di MusiComedy Night", tag: "Tari" },
 ];
 
 const focusAreas = [
@@ -424,14 +425,7 @@ export default function KomunitasPage() {
             <h2 className="mt-2 text-2xl font-black tracking-[-0.035em] text-[#37215b] sm:text-3xl lg:text-4xl">
               Momen bersama Kala Muda
             </h2>
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3">
-              {kegiatanPhotos.map((p) => (
-                <figure key={p.caption} className="overflow-hidden rounded-3xl border border-[#e5e2f5] bg-[#faf9ff]">
-                  <img src={p.src} alt={p.caption} loading="lazy" decoding="async" width={720} height={1280} className="aspect-[3/4] w-full object-cover" />
-                  <figcaption className="px-4 py-3 text-sm font-bold text-[#37215b]">{p.caption}</figcaption>
-                </figure>
-              ))}
-            </div>
+            <KegiatanSlider photos={kegiatanPhotos} />
           </div>
         </section>
 

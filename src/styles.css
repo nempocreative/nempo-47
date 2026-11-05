@@ -1790,3 +1790,12 @@ html, body, #root {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+/* Kala Muda kegiatan slider */
+.kg-progress { width: 0; animation-name: kg-progress; animation-timing-function: linear; animation-fill-mode: forwards; }
+@keyframes kg-progress { to { width: 100%; } }
+.kg-card-active { animation: kg-float 4s ease-in-out infinite; }
+@keyframes kg-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+.kg-shine { background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%); background-size: 250% 100%; animation: kg-shine 1.4s ease-out .3s both; }
+@keyframes kg-shine { from { background-position: 150% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .kg-card-active, .kg-shine { animation: none; } }
