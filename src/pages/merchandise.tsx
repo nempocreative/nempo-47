@@ -33,6 +33,7 @@ const products = [
 ];
 
 const SECONDS_PER_ANGLE = 0.85;
+const FADE = 0.14;
 const LABELS = ["depan", "serong kiri", "samping kiri", "serong belakang", "belakang", "serong belakang", "samping kanan", "serong kanan"];
 
 function VestSpinner({ frames, name }: { frames: string[]; name: string }) {
@@ -55,10 +56,10 @@ function VestSpinner({ frames, name }: { frames: string[]; name: string }) {
         if (d < -n / 2) d += n;
         // Tahan tiap sudut sebentar lalu berpindah halus ke sudut berikutnya.
         const t = Math.abs(d);
-        const op = t <= 0.3 ? 1 : t >= 1 ? 0 : 1 - (t - 0.3) / 0.7;
+        const op = Math.min(1, Math.max(0, (0.5 + FADE - t) / (2 * FADE)));
         el.style.opacity = String(op);
-        el.style.transform = `rotateY(${(-d * 18).toFixed(2)}deg)`;
-        el.style.zIndex = String(Math.round((1 - t) * 10));
+        el.style.transform = `rotateY(${(-d * 22).toFixed(2)}deg)`;
+        el.style.zIndex = String(Math.round((1 - Math.min(t, 1)) * 10));
       });
     };
     const tick = (now: number) => {
