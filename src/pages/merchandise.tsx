@@ -33,7 +33,7 @@ const products = [
 ];
 
 const SECONDS_PER_ANGLE = 0.85;
-const FADE = 0.14;
+const FADE = 0.11;
 const LABELS = ["depan", "serong kiri", "samping kiri", "serong belakang", "belakang", "serong belakang", "samping kanan", "serong kanan"];
 
 function VestSpinner({ frames, name }: { frames: string[]; name: string }) {
