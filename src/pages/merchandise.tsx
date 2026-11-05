@@ -3,18 +3,18 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
 import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
-import lapDepan from "@/assets/rompi-lapangan-depan.webp.asset.json";
-import lapBelakang from "@/assets/rompi-lapangan-belakang.webp.asset.json";
-import nmpDepan from "@/assets/rompi-nempo-depan.webp.asset.json";
-import nmpBelakang from "@/assets/rompi-nempo-belakang.webp.asset.json";
+import lapDepan from "@/assets/rompi-manekin-lapangan-depan.webp";
+import lapBelakang from "@/assets/rompi-manekin-lapangan-belakang.webp";
+import nmpDepan from "@/assets/rompi-manekin-nempo-depan.webp";
+import nmpBelakang from "@/assets/rompi-manekin-nempo-belakang.webp";
 import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo-v2.jpg";
 
 const products = [
   {
     name: "Rompi Lapangan Nempo",
     image: rompiLapanganImage,
-    front: lapDepan.url,
-    back: lapBelakang.url,
+    front: lapDepan,
+    back: lapBelakang,
     desc: "Rompi crew lapangan dengan webbing modular di depan, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
     features: [
       "Holster HT di dada + kantong HP",
@@ -27,8 +27,8 @@ const products = [
   {
     name: "Rompi Nempo",
     image: rompiImage,
-    front: nmpDepan.url,
-    back: nmpBelakang.url,
+    front: nmpDepan,
+    back: nmpBelakang,
     desc: "Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang \"n\" besar di punggung, ditemani logo kecil KALA MUDA.",
     features: ["Kantong depan + saku ritsleting", "Strap samping bisa disesuaikan", "Lapisan dalam jaring, adem dipakai"],
   },
