@@ -26,6 +26,7 @@ import kalaMudaHeroImage from "@/assets/94d218d05080a6554bc7214283cb8a88_1789408
 import digiNempoHeroImage from "@/assets/d8bb582f2f075b716c1d0d1dc01bb672_1789408801865.jpg";
 import digitalGrowthBannerImage from "@/assets/nempo-team-banner.jpg";
 import ggsBeautyOpeningImage from "@/assets/event-ggs-beauty-opening.jpg";
+import musicomedyPortfolioPosterImage from "@/assets/event-musicomedy-night-poster.jpg";
 import riuhRonaPosterImage from "@/assets/event-riuh-rona-poster.jpg";
 import secangkirKopiPosterImage from "@/assets/event-secangkir-kopi-poster.jpg";
 import universityCoffeeNightPosterImage from "@/assets/event-university-coffee-night-poster.jpg";
@@ -1119,6 +1120,14 @@ export default function Home() {
       location: "GGS Beauty",
       date: "18 Oktober 2026",
       badge: "Opening",
+    },
+    {
+      id: "musicomedy-night-2026",
+      name: "MusiComedy Night",
+      image: musicomedyPortfolioPosterImage,
+      location: "Good Story Cafe",
+      date: "4 November 2026",
+      badge: "Musik & Komedi",
     },
   ];
   const [eventRowEl, eventRowRef] = useState<HTMLElement | null>(null);

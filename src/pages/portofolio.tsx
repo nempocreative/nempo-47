@@ -119,6 +119,16 @@ export default function PortofolioPage() {
                       <CalendarDays className="h-3 w-3 shrink-0 text-[#0194f3]" />
                       {event.date}
                     </p>
+                    {event.link && (
+                      <a
+                        href={event.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-[11px] font-bold text-[#0194f3] hover:underline"
+                      >
+                        Lihat di Instagram →
+                      </a>
+                    )}
                   </div>
                 </article>
               ))}

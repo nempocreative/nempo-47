@@ -1,3 +1,4 @@
+import musicomedyPosterImage from "@/assets/event-musicomedy-night-poster.jpg";
 import colorTheBeatPosterImage from "@/assets/event-color-the-beat-poster.jpg";
 import ggsBeautyOpeningImage from "@/assets/event-ggs-beauty-opening.jpg";
 import lalanaPagiPosterImage from "@/assets/event-lalana-pagi-poster.jpg";
@@ -15,6 +16,7 @@ export interface EventPortfolioItem {
   location: string;
   date: string;
   badge: string;
+  link?: string;
 }
 
 /**
@@ -93,5 +95,14 @@ export const eventPortfolioItems: EventPortfolioItem[] = [
     location: "GGS Beauty",
     date: "18 Oktober 2026",
     badge: "Opening",
+  },
+  {
+    id: "musicomedy-night-2026",
+    name: "MusiComedy Night",
+    image: musicomedyPosterImage,
+    location: "Good Story Cafe",
+    date: "4 November 2026",
+    badge: "Musik & Komedi",
+    link: "https://www.instagram.com/p/DfMTZ0GM2Bj/",
   },
 ];
