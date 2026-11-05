@@ -154,16 +154,7 @@ const waysToJoin = [
   },
 ];
 
-const marqueeWords = [
-  "Karya",
-  "Event",
-  "Kolaborasi",
-  "Peluang",
-  "Cerita",
-  "Komunitas",
-  "Musik",
-  "Seni",
-];
+const marqueeWords = [...interestOptions, ...hobbyOptions.filter((h) => h !== "Lainnya")];
 
 export default function KomunitasPage() {
   return (
@@ -225,9 +216,9 @@ export default function KomunitasPage() {
               </div>
               <dl className="mt-9 grid max-w-md grid-cols-3 gap-4 border-t border-[#d8def5] pt-6 sm:mt-10">
                 {[
-                  { value: "4", label: "Ruang minat" },
-                  { value: "12+", label: "Kegiatan tiap tahun" },
-                  { value: "1", label: "Rumah bersama" },
+                  { value: String(interestOptions.length), label: "Pilihan minat" },
+                  { value: String(originOptions.length), label: "Kategori asal" },
+                  { value: "0", label: "Biaya daftar" },
                 ].map((stat) => (
                   <div key={stat.label}>
                     <dt className="sr-only">{stat.label}</dt>
@@ -341,7 +332,7 @@ export default function KomunitasPage() {
               </p>
             </div>
 
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {communityTracks.map((track, index) => (
                 <article
                   key={track.title}
@@ -407,13 +398,42 @@ export default function KomunitasPage() {
                     <p className="mt-2 text-sm leading-6 text-[#62677c]">
                       {track.description}
                     </p>
-                    <div className="mt-4 flex items-center gap-1 text-xs font-bold text-[#aaa9bf] transition group-hover:text-[#a62f78]">
-                      Segera hadir
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                    </div>
+                    <a
+                      href="#gabung"
+                      className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[#a62f78] transition hover:gap-2"
+                    >
+                      Daftar sebagai {track.title}
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </a>
                   </div>
                 </article>
               ))}
+            </div>
+
+            {/* Hobi — sama dengan pilihan "Hobi" di formulir */}
+            <div className="mt-10 flex flex-col gap-4 rounded-3xl border border-[#dedff5] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
+                  Punya hobi?
+                </p>
+                <p className="mt-1 text-sm font-semibold text-[#3f3564]">
+                  Ceritakan juga di formulir — boleh pilih lebih dari satu.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {hobbyOptions.map((hobby) => {
+                  const Icon = hobbyIcons[hobby] ?? Lightbulb;
+                  return (
+                    <span
+                      key={hobby}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-[#f5f0ff] px-3.5 py-2 text-xs font-bold text-[#37215b]"
+                    >
+                      <Icon className="h-3.5 w-3.5 text-[#a62f78]" />
+                      {hobby === "Lainnya" ? "Lainnya (isi sendiri)" : hobby}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -511,7 +531,7 @@ export default function KomunitasPage() {
               <h2 className="mt-2 max-w-md text-2xl font-black leading-tight tracking-[-0.04em] text-[#37215b] sm:text-3xl lg:text-4xl">
                 Daftar jadi bagian
                 <br />
-                <span className="text-[#a62f78]">Nempo Community.</span>
+                <span className="text-[#a62f78]">Kala Muda Community.</span>
               </h2>
               <p className="mt-4 max-w-md text-sm leading-7 text-[#62677c]">
                 Isi formulir singkat ini dan ceritakan minatmu. Tim kami akan
@@ -519,10 +539,10 @@ export default function KomunitasPage() {
               </p>
               <ul className="mt-6 space-y-3">
                 {[
-                  "Terbuka untuk pelajar, mahasiswa, dan umum",
-                  "Tanpa biaya pendaftaran",
-                  "Boleh daftar lebih dari satu minat nanti",
-                  "Pilih asal: sekolah, kuliah, atau umum — plus hobimu",
+                  "Asal: Sekolah, Kuliah / Univ, atau Umum",
+                  `Pilih satu dari ${interestOptions.length} minat: ${interestOptions.join(", ")}`,
+                  "Hobi boleh lebih dari satu: Tari, Bernyanyi, Musik, atau isi sendiri",
+                  "Tanpa biaya — isian langsung terkirim ke WhatsApp tim kami",
                 ].map((point) => (
                   <li
                     key={point}
