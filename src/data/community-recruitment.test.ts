@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { applicationWaUrl, buildApplicationMessage, interestOptions } from "./community-recruitment";
+import { applicationWaUrl, buildApplicationMessage, interestOptions, originOptions } from "./community-recruitment";
 import { NEMPO_WA_URL } from "../lib/contact";
 
 const sample = {
@@ -9,6 +9,8 @@ const sample = {
   email: "asep@example.com",
   whatsapp: "085724981356",
   interest: "Videografer dan Fotographer",
+  origin_type: "Kuliah",
+  origin_name: "Universitas Garut",
   reason: "Suka motret acara kampus",
 };
 
@@ -24,13 +26,24 @@ describe("formulir recruitment", () => {
     ]);
   });
 
+  it("pilihan asal persis: Sekolah, Kuliah, Umum", () => {
+    expect([...originOptions]).toEqual(["Sekolah", "Kuliah", "Umum"]);
+  });
+
   it("pesan WhatsApp memuat semua isian", () => {
     const msg = buildApplicationMessage(sample);
     expect(msg).toContain("Asep Sunandar");
     expect(msg).toContain("085724981356");
     expect(msg).toContain("asep@example.com");
+    expect(msg).toContain("Asal: Kuliah — Universitas Garut");
     expect(msg).toContain("Minat: Videografer dan Fotographer");
     expect(msg).toContain("Cerita: Suka motret acara kampus");
+  });
+
+  it("asal umum tanpa nama asal tidak menambah tanda pisah", () => {
+    const msg = buildApplicationMessage({ ...sample, origin_type: "Umum", origin_name: undefined });
+    expect(msg).toContain("Asal: Umum");
+    expect(msg).not.toContain("Asal: Umum —");
   });
 
   it("tanpa cerita opsional, pesan tidak menambah baris cerita", () => {
