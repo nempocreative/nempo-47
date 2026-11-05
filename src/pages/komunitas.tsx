@@ -289,6 +289,11 @@ export default function KomunitasPage() {
 
         {/* ===== FOCUS AREAS ===== */}
         <section className="border-b border-[#e3dcd3] bg-white">
+          <div className="mx-auto max-w-7xl px-4 pt-9 sm:px-6 lg:px-8">
+            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
+              Siapa yang bisa daftar
+            </span>
+          </div>
           <div className="mx-auto grid max-w-7xl gap-px bg-[#dfe5f8] px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
             {focusAreas.map((area, index) => (
               <article
