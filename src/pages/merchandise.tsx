@@ -36,8 +36,8 @@ const products = [
 
 // Lapisan siluet berbentuk lonjong (bukan balok) supaya badan manekin terlihat bulat saat berputar.
 const DEPTH = 26;
-const LAYERS = Array.from({ length: 14 }, (_, i) => {
-  const z = -DEPTH + (i * (2 * DEPTH)) / 13;
+const LAYERS = Array.from({ length: 20 }, (_, i) => {
+  const z = -DEPTH + (i * (2 * DEPTH)) / 19;
   const round = Math.sqrt(Math.max(0, 1 - (z / (DEPTH + 4)) ** 2));
   return { z, scale: 0.6 + 0.4 * round };
 });
@@ -116,7 +116,7 @@ export default function MerchandisePage() {
         .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 9s linear infinite; }
         .merch-spin.is-paused, .merch-scene:has(.is-paused) .merch-float { animation-play-state: paused; }
         .merch-face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-        .merch-edge { filter: brightness(.16) saturate(.5); }
+        .merch-edge { filter: brightness(.07) saturate(0); }
         .merch-front { transform: translateZ(28px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .merch-back { transform: rotateY(180deg) translateZ(28px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .merch-shadow { position: absolute; left: 20%; right: 20%; bottom: -14px; height: 16px; border-radius: 50%; background: rgba(0,0,0,.55); filter: blur(8px); animation: merch-shadow 4s ease-in-out infinite; }
