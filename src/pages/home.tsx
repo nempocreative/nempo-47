@@ -1436,7 +1436,7 @@ export default function Home() {
                       <span className="h-1.5 w-1.5 rounded-full bg-[#ffc300]" aria-hidden="true" />
                       {copy.place}
                     </p>
-                    <h2 className="max-w-[440px] whitespace-nowrap text-[22px] md:text-[36px] font-black leading-[1.06] tracking-[-0.045em] text-white">
+                    <h2 className="max-w-[440px] whitespace-nowrap text-[22px] md:text-[26px] lg:text-[36px] font-black leading-[1.06] tracking-[-0.045em] text-white">
                       {copy.title}
                     </h2>
                     <p className="mt-2 max-w-[390px] text-[11px] md:text-[13px] leading-relaxed text-white/80">
