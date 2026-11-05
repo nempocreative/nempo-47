@@ -115,6 +115,8 @@ export function CommunityApplicationForm() {
       whatsapp: parsed.data.whatsapp,
       interest: parsed.data.interest,
       reason: parsed.data.reason || null,
+      origin_type: parsed.data.origin_type,
+      origin_name: parsed.data.origin_name || null,
     });
     setSubmitting(false);
     setArchived(!error);
@@ -222,6 +224,51 @@ export function CommunityApplicationForm() {
                 <p className="mt-1.5 text-xs font-semibold text-[#c2274f]">
                   {errors.email}
                 </p>
+              )}
+            </div>
+            <div className="sm:col-span-2">
+              <span className={labelClass}>Asal</span>
+              <div className="grid grid-cols-3 gap-2.5">
+                {originOptions.map((option) => {
+                  const active = form.origin_type === option;
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => updateField("origin_type", option)}
+                      className={`rounded-2xl border px-3 py-3 text-center text-xs font-bold transition sm:text-sm ${
+                        active
+                          ? "border-[#a62f78] bg-[#a62f78] text-white shadow-md shadow-[#a62f78]/20"
+                          : "border-[#d8def5] bg-[#faf9ff] text-[#37215b] hover:border-[#a62f78]/40"
+                      }`}
+                    >
+                      {option === "Kuliah" ? "Kuliah / Univ" : option}
+                    </button>
+                  );
+                })}
+              </div>
+              {errors.origin_type && (
+                <p className="mt-1.5 text-xs font-semibold text-[#c2274f]">{errors.origin_type}</p>
+              )}
+              {form.origin_type && (
+                <div className="mt-3">
+                  <label htmlFor="origin_name" className={labelClass}>
+                    {originNameLabel[form.origin_type]?.label}
+                  </label>
+                  <input
+                    id="origin_name"
+                    type="text"
+                    value={form.origin_name}
+                    onChange={(e) => updateField("origin_name", e.target.value)}
+                    placeholder={originNameLabel[form.origin_type]?.placeholder}
+                    className={inputClass}
+                    maxLength={150}
+                  />
+                  {errors.origin_name && (
+                    <p className="mt-1.5 text-xs font-semibold text-[#c2274f]">{errors.origin_name}</p>
+                  )}
+                </div>
               )}
             </div>
             <div className="sm:col-span-2">
