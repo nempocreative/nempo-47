@@ -24,11 +24,15 @@ import communityTalentImage from "@/assets/komunitas-talent.jpg";
 import kegiatanDapoer from "@/assets/kalamuda-kegiatan-dapoer-nyunda.webp";
 import kegiatanMakan from "@/assets/kalamuda-kegiatan-makan-bersama.webp";
 import kegiatanPodcast from "@/assets/kalamuda-kegiatan-podcast-malam.webp";
+import kegiatanAkustik from "@/assets/kalamuda-kegiatan-akustik.webp";
+import kegiatanTari from "@/assets/kalamuda-kegiatan-tari-musicomedy.webp";
 
 const kegiatanPhotos = [
   { src: kegiatanDapoer, caption: "Dapoer Nyunda" },
   { src: kegiatanMakan, caption: "Makan bersama" },
   { src: kegiatanPodcast, caption: "Rekaman podcast malam" },
+  { src: kegiatanAkustik, caption: "Jamming akustik" },
+  { src: kegiatanTari, caption: "Tari di MusiComedy Night" },
 ];
 
 const focusAreas = [
