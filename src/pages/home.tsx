@@ -3,7 +3,7 @@ import { SEO } from "@/components/seo";
 import musicomedyPoster from "@/assets/musicomedy-night-poster.webp";
 import { Layout } from "@/components/layout";
 import { PlacePhoto } from "@/components/place-photo";
-import { Search, MapPin, MapPinned, Route, TrainFront, ChevronRight, ArrowRight, Flame, ThumbsUp, Info, Map, CalendarDays, Users, Building2, Ticket, Leaf, Award, Gift, TreePine, Heart, Mountain, Compass, Droplets, Wind, Eye, Thermometer, Newspaper, Clock, Radio, UtensilsCrossed, UserPlus, Star, Shield, Crown, Coffee, Music, Tv, Mic, BookOpen, Instagram } from "lucide-react";
+import { Search, MapPin, MapPinned, Route, TrainFront, ChevronRight, ArrowRight, Flame, ThumbsUp, Info, Map, CalendarDays, Users, Building2, Ticket, Leaf, Award, Gift, TreePine, Heart, Mountain, Compass, Droplets, Wind, Eye, Thermometer, Newspaper, Clock, Radio, History, UtensilsCrossed, UserPlus, Star, Shield, Crown, Coffee, Music, Tv, Mic, BookOpen, Instagram } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Link, useLocation } from "@/lib/wouter";
 import { CategoryGrid } from "@/components/icons3d";
@@ -985,6 +985,14 @@ export default function Home() {
     return end >= t && matchesCity(ev.location, "Garut");
   });
 
+  // Event yang sudah berlalu otomatis pindah ke card Riwayat
+  const spotlight = (eventItems ?? []).find(ev => ev.slug === "musicomedy-night")
+    ?? { slug: "musicomedy-night", date: "2026-11-04", date_end: undefined as string | undefined, dateEnd: undefined as string | undefined };
+  const today = new Date().toISOString().slice(0, 10);
+  const spotlightDateEndRaw: string | undefined = spotlight.date_end ?? spotlight.dateEnd;
+  const spotlightEndDate = spotlightDateEndRaw && spotlightDateEndRaw > spotlight.date ? spotlightDateEndRaw : spotlight.date;
+  const eventFinished = spotlightEndDate < today;
+
   // Auto-advance event fan carousel
   useEffect(() => {
     const len = activeEventItems.length || 1;
@@ -1864,11 +1872,11 @@ export default function Home() {
         <section className="home-section-upcoming relative">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-primary text-primary-foreground">
-              <CalendarDays className="w-5 h-5" strokeWidth={1.75} />
+              {eventFinished ? <History className="w-5 h-5" strokeWidth={1.75} /> : <CalendarDays className="w-5 h-5" strokeWidth={1.75} />}
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-foreground font-black text-base leading-tight">Event Mendatang</h2>
-              <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.10em] mt-0.5">Catat tanggalnya, ayo datang bareng!</p>
+              <h2 className="text-foreground font-black text-base leading-tight">{eventFinished ? "Riwayat Event" : "Event Mendatang"}</h2>
+              <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.10em] mt-0.5">{eventFinished ? "Sudah berlalu — sampai jumpa di acara berikutnya!" : "Catat tanggalnya, ayo datang bareng!"}</p>
             </div>
           </div>
           <Link
@@ -1893,6 +1901,11 @@ export default function Home() {
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="text-xs font-bold uppercase tracking-wider text-primary">Rabu, 4 November 2026</p>
                   <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-primary">Gratis</span>
+                  {eventFinished && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-muted-foreground">
+                      <History className="h-3 w-3" strokeWidth={2} /> Selesai
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-2xl font-black leading-tight text-foreground sm:text-3xl lg:text-4xl">MusiComedy Night</h3>
                 <div className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-primary/5 py-1 pl-1.5 pr-3.5">
