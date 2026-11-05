@@ -1,4 +1,4 @@
-import musicomedyPosterImage from "@/assets/musicomedy-night-poster.webp";
+import musicomedyPosterImage from "@/assets/event-musicomedy-night-poster.jpg";
 import colorTheBeatPosterImage from "@/assets/event-color-the-beat-poster.jpg";
 import ggsBeautyOpeningImage from "@/assets/event-ggs-beauty-opening.jpg";
 import lalanaPagiPosterImage from "@/assets/event-lalana-pagi-poster.jpg";
