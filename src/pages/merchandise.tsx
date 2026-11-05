@@ -37,7 +37,7 @@ function VestSpinner({ image, name }: { image: string; name: string }) {
     />
   );
   return (
-    <div className="relative flex flex-col items-center bg-gradient-to-b from-[#eef0f6] to-[#e3e6f3] px-6 pb-5 pt-8">
+    <div className="relative flex flex-col items-center bg-gradient-to-b from-[#d8d8d8] to-[#e1e1e1] px-6 pb-5 pt-8">
       <button
         type="button"
         onClick={() => setPaused((v) => !v)}
@@ -98,7 +98,7 @@ export default function MerchandisePage() {
         .merch-stage { perspective: 1400px; width: min(78vw, 300px); aspect-ratio: 2 / 3; position: relative; cursor: pointer; background: none; border: 0; padding: 0; }
         .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 7s cubic-bezier(.45,0,.55,1) infinite; }
         .merch-spin.is-paused { animation-play-state: paused; }
-        .merch-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: 200% auto; background-repeat: no-repeat; mix-blend-mode: multiply; }
+        .merch-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: 200% auto; background-repeat: no-repeat; }
         .merch-back { transform: rotateY(180deg); }
         .merch-shadow { position: absolute; left: 18%; right: 18%; bottom: -10px; height: 14px; border-radius: 50%; background: rgba(24,43,57,.22); filter: blur(6px); animation: merch-shadow 3.5s ease-in-out infinite; }
         @keyframes merch-rotate { 0%,18% { transform: rotateY(0deg); } 50%,68% { transform: rotateY(180deg); } 100% { transform: rotateY(360deg); } }
