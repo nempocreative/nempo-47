@@ -3,12 +3,18 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
 import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
+import lapDepan from "@/assets/rompi-lapangan-depan.webp.asset.json";
+import lapBelakang from "@/assets/rompi-lapangan-belakang.webp.asset.json";
+import nmpDepan from "@/assets/rompi-nempo-depan.webp.asset.json";
+import nmpBelakang from "@/assets/rompi-nempo-belakang.webp.asset.json";
 import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo-v2.jpg";
 
 const products = [
   {
     name: "Rompi Lapangan Nempo",
     image: rompiLapanganImage,
+    front: lapDepan.url,
+    back: lapBelakang.url,
     desc: "Rompi crew lapangan dengan webbing modular di depan, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
     features: [
       "Holster HT di dada + kantong HP",
@@ -21,37 +27,39 @@ const products = [
   {
     name: "Rompi Nempo",
     image: rompiImage,
+    front: nmpDepan.url,
+    back: nmpBelakang.url,
     desc: "Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang \"n\" besar di punggung, ditemani logo kecil KALA MUDA.",
     features: ["Kantong depan + saku ritsleting", "Strap samping bisa disesuaikan", "Lapisan dalam jaring, adem dipakai"],
   },
 ];
 
-function VestSpinner({ image, name }: { image: string; name: string }) {
+const LAYERS = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+
+function VestSpinner({ front, back, name }: { front: string; back: string; name: string }) {
   const [paused, setPaused] = useState(false);
-  const face = (side: "front" | "back") => (
-    <div
-      className={`merch-face merch-${side}`}
-      role="img"
-      aria-label={`${name} tampak ${side === "front" ? "depan" : "belakang"}`}
-      style={{ backgroundImage: `url(${image})`, backgroundPosition: side === "front" ? "0% 50%" : "100% 50%" }}
-    />
-  );
   return (
-    <div className="relative flex flex-col items-center bg-gradient-to-b from-[#d8d8d8] to-[#e1e1e1] px-6 pb-5 pt-8">
+    <div className="merch-scene relative flex flex-col items-center overflow-hidden px-6 pb-5 pt-8">
+      <span aria-hidden className="merch-glow" />
       <button
         type="button"
         onClick={() => setPaused((v) => !v)}
         className="merch-stage"
-        aria-label={paused ? "Putar lagi rompi" : "Hentikan putaran rompi"}
+        aria-label={paused ? `Putar lagi ${name}` : `Hentikan putaran ${name}`}
       >
-        <div className={`merch-spin ${paused ? "is-paused" : ""}`}>
-          {face("front")}
-          {face("back")}
+        <div className="merch-float">
+          <div className={`merch-spin ${paused ? "is-paused" : ""}`}>
+            {LAYERS.map((z) => (
+              <img key={z} src={front} alt="" aria-hidden className="merch-face merch-edge" style={{ transform: `translateZ(${z}px)` }} />
+            ))}
+            <img src={front} alt={`${name} tampak depan`} className="merch-face merch-front" />
+            <img src={back} alt={`${name} tampak belakang`} className="merch-face merch-back" />
+          </div>
         </div>
         <span aria-hidden className="merch-shadow" />
       </button>
-      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6b7280]">
-        {paused ? "Ketuk untuk memutar" : "Ketuk untuk berhenti"}
+      <p className="relative mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#c7cdf5]">
+        360° · {paused ? "Ketuk untuk memutar" : "Ketuk untuk berhenti"}
       </p>
     </div>
   );
@@ -73,8 +81,8 @@ export default function MerchandisePage() {
         </p>
 
         {products.map((p) => (
-        <article key={p.name} className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1fr_1fr] md:items-center">
-          <VestSpinner image={p.image} name={p.name} />
+        <article key={p.name} className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1fr_1fr] md:items-stretch">
+          <VestSpinner front={p.front} back={p.back} name={p.name} />
           <div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
             <span className="w-fit rounded-full bg-[#182b39] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">Segera hadir</span>
             <h2 className="text-2xl font-black text-[#182b39]">{p.name}</h2>
@@ -95,15 +103,22 @@ export default function MerchandisePage() {
         ))}
       </section>
       <style>{`
-        .merch-stage { perspective: 1400px; width: min(78vw, 300px); aspect-ratio: 2 / 3; position: relative; cursor: pointer; background: none; border: 0; padding: 0; }
-        .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 7s cubic-bezier(.45,0,.55,1) infinite; }
-        .merch-spin.is-paused { animation-play-state: paused; }
-        .merch-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background-size: 200% auto; background-repeat: no-repeat; }
-        .merch-back { transform: rotateY(180deg); }
-        .merch-shadow { position: absolute; left: 18%; right: 18%; bottom: -10px; height: 14px; border-radius: 50%; background: rgba(24,43,57,.22); filter: blur(6px); animation: merch-shadow 3.5s ease-in-out infinite; }
-        @keyframes merch-rotate { 0%,18% { transform: rotateY(0deg); } 50%,68% { transform: rotateY(180deg); } 100% { transform: rotateY(360deg); } }
-        @keyframes merch-shadow { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.6); opacity:.6; } }
-        @media (prefers-reduced-motion: reduce) { .merch-spin, .merch-shadow { animation: none; } }
+        .merch-scene { background: radial-gradient(120% 90% at 50% 20%, #2b2f8f 0%, #1a1c55 45%, #0f1030 100%); align-self: stretch; justify-content: center; }
+        .merch-glow { position: absolute; top: 18%; left: 50%; width: 70%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle, rgba(110,75,180,.55), rgba(37,99,235,.25) 45%, transparent 70%); filter: blur(10px); animation: merch-pulse 4s ease-in-out infinite; }
+        .merch-stage { perspective: 1100px; width: min(70vw, 290px); aspect-ratio: 3 / 4; position: relative; cursor: pointer; background: none; border: 0; padding: 0; }
+        .merch-float { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-float 4s ease-in-out infinite; }
+        .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 9s linear infinite; }
+        .merch-spin.is-paused, .merch-scene:has(.is-paused) .merch-float { animation-play-state: paused; }
+        .merch-face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+        .merch-edge { filter: brightness(.18) saturate(.6); }
+        .merch-front { transform: translateZ(6px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .merch-back { transform: rotateY(180deg) translateZ(6px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .merch-shadow { position: absolute; left: 20%; right: 20%; bottom: -14px; height: 16px; border-radius: 50%; background: rgba(0,0,0,.55); filter: blur(8px); animation: merch-shadow 4s ease-in-out infinite; }
+        @keyframes merch-rotate { from { transform: rotateX(-6deg) rotateY(0deg); } to { transform: rotateX(-6deg) rotateY(360deg); } }
+        @keyframes merch-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes merch-shadow { 0%,100% { transform: scaleX(1); opacity: .9; } 50% { transform: scaleX(.8); opacity: .55; } }
+        @keyframes merch-pulse { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) { .merch-spin, .merch-float, .merch-shadow, .merch-glow { animation: none; } }
       `}</style>
     </Layout>
   );
