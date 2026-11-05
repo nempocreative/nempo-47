@@ -36,65 +36,94 @@ const kegiatanPhotos = [
   { src: kegiatanTari, caption: "Tari di MusiComedy Night", tag: "Tari" },
 ];
 
+// Kategori asal — sama dengan pilihan "Asal" di formulir pendaftaran.
 const focusAreas = [
   {
-    icon: Palette,
-    title: "Karya dan talenta",
+    icon: School,
+    title: "Sekolah",
     description:
-      "Tempat untuk memperkenalkan karya, mencoba ide baru, dan menemukan orang yang bisa diajak membuat sesuatu.",
+      "Pelajar SMP, SMA, atau SMK. Cukup tulis nama sekolahmu di formulir — mulai berkarya sejak sekarang.",
   },
   {
-    icon: CalendarDays,
-    title: "Acara yang dekat",
+    icon: GraduationCap,
+    title: "Kuliah / Univ",
     description:
-      "Dari panggung kecil sampai kegiatan bersama, selalu ada alasan untuk bertemu dan mengisi waktu dengan baik.",
+      "Mahasiswa dari kampus mana pun. Tulis nama kampusmu, lalu bawa ilmu dan idemu ke proyek nyata.",
   },
   {
-    icon: Lightbulb,
-    title: "Cerita dan peluang",
+    icon: Users,
+    title: "Umum",
     description:
-      "Belajar dari pengalaman orang lain, berbagi pengetahuan, dan membuka jalan untuk kolaborasi berikutnya.",
+      "Sudah bekerja, freelance, atau sedang cari kegiatan baru? Tetap boleh daftar dan ikut bergerak.",
   },
 ];
 
-const communityTracks = [
-  {
-    icon: Music2,
-    title: "Event dan panggung",
-    description:
-      "Musisi, performer, MC, dan tim di balik panggung yang ingin ikut membuat acara bersama Nempo.",
-    accent: "#b33a82",
-    tag: "Event",
-    image: communityMusicImage,
-  },
-  {
-    icon: Camera,
-    title: "Konten dan sosmed",
-    description:
-      "Content creator, fotografer, videografer, dan admin sosmed yang mau belajar bikin konten bareng.",
-    accent: "#2563c7",
-    tag: "Konten",
-    image: communityCreatorImage,
-  },
-  {
+// Pilihan minat — urutan & nama sama dengan pilihan "Minat" di formulir.
+const trackDetails: Record<(typeof interestOptions)[number], Omit<(typeof communityTracks)[number], "title">> = {
+  Designer: {
     icon: Palette,
-    title: "Desain kreatif",
-    description:
-      "Desainer grafis, ilustrator, dan pembuat karya visual untuk kebutuhan brand dan acara.",
+    description: "Desain grafis, ilustrasi, dan visual untuk poster, feed, serta kebutuhan brand dan acara.",
     accent: "#6e4bb4",
     tag: "Desain",
     image: communityArtImage,
   },
-  {
-    icon: GraduationCap,
-    title: "Talenta muda",
-    description:
-      "Anak muda berbakat yang ingin tampil, dilatih, dan disalurkan ke panggung serta proyek Nempo.",
-    accent: "#bd4d8b",
-    tag: "Talent",
-    image: communityTalentImage,
+  "Web Developer": {
+    icon: Code2,
+    description: "Bikin website dan aplikasi untuk event, UMKM, dan komunitas — dari tampilan sampai sistemnya.",
+    accent: "#1f7a6d",
+    tag: "Web",
+    image: communityWebImage,
   },
-];
+  "Content Creator": {
+    icon: Sparkles,
+    description: "Ide konten, naskah, dan tampil di depan kamera untuk Instagram, TikTok, dan podcast.",
+    accent: "#bd4d8b",
+    tag: "Konten",
+    image: kegiatanPodcast,
+  },
+  "Videografer dan Fotographer": {
+    icon: Camera,
+    description: "Dokumentasi acara, foto produk, dan video highlight — belajar langsung di lapangan.",
+    accent: "#2563c7",
+    tag: "Visual",
+    image: communityCreatorImage,
+  },
+  Marketing: {
+    icon: Megaphone,
+    description: "Strategi promosi, sosmed, dan kerja sama sponsor supaya acara dan karya dikenal lebih luas.",
+    accent: "#c2581f",
+    tag: "Promosi",
+    image: communityMarketingImage,
+  },
+  "Event Management": {
+    icon: CalendarDays,
+    description: "Rundown, koordinasi tim, dan panggung — jadi bagian dari tim di balik acara Nempo.",
+    accent: "#b33a82",
+    tag: "Event",
+    image: communityMusicImage,
+  },
+};
+
+type Track = {
+  icon: typeof Palette;
+  title: string;
+  description: string;
+  accent: string;
+  tag: string;
+  image: string;
+};
+
+const communityTracks: Track[] = interestOptions.map((title) => ({
+  title,
+  ...(trackDetails as Record<string, Omit<Track, "title">>)[title],
+}));
+
+const hobbyIcons: Record<string, typeof Palette> = {
+  Tari: Footprints,
+  Bernyanyi: Mic2,
+  Musik: Music2,
+  Lainnya: Lightbulb,
+};
 
 const waysToJoin = [
   {
