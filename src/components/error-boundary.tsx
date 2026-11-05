@@ -1,5 +1,11 @@
 import { Component, type ReactNode } from "react";
 import { RefreshCw, MessageCircle, HeartHandshake } from "lucide-react";
+import { reloadOnceForStaleChunks } from "@/lib/lazy-with-retry";
+
+function isChunkLoadError(error: unknown): boolean {
+  const msg = error instanceof Error ? `${error.name} ${error.message}` : String(error);
+  return /Importing a module script failed|Failed to fetch dynamically imported module|error loading dynamically imported module|ChunkLoadError|Loading chunk/i.test(msg);
+}
 
 interface Props { children: ReactNode; }
 interface State { hasError: boolean; error: Error | null; }
@@ -17,8 +23,14 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: { componentStack: string }) {
+    // A page file that failed to download (site was just updated / flaky signal) is fixed by reloading.
+    if (isChunkLoadError(error) && reloadOnceForStaleChunks()) return;
     console.error("[Nempo Organizer] Unhandled error:", error, info);
   }
+
+  handleRetry = () => {
+    window.location.reload();
+  };
 
   handleReload = () => {
     this.setState({ hasError: false, error: null });
@@ -133,6 +145,21 @@ export class ErrorBoundary extends Component<Props, State> {
 
             {/* Action buttons */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {/* Reload this same page */}
+              <button
+                onClick={this.handleRetry}
+                style={{
+                  width: "100%", padding: "13px 16px",
+                  borderRadius: 16, border: "1px solid rgba(1,148,243,0.35)",
+                  background: "white", color: "#0172B1",
+                  fontSize: 13, fontWeight: 800, cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                }}
+              >
+                <RefreshCw style={{ width: 15, height: 15 }} />
+                Muat ulang halaman ini
+              </button>
+
               {/* Report to admin */}
               <a
                 href={`https://ig.me/m/nempo.id`}
