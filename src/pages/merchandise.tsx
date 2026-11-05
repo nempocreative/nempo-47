@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
-import rompiImage from "@/assets/merch-rompi-nempo.jpg";
+import rompiImage from "@/assets/merch-rompi-nempo-kalamuda.jpg";
 
 export default function MerchandisePage() {
   return (
@@ -24,7 +24,7 @@ export default function MerchandisePage() {
             <span className="w-fit rounded-full bg-[#182b39] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">Segera hadir</span>
             <h2 className="text-2xl font-black text-[#182b39]">Rompi Nempo</h2>
             <p className="text-sm leading-6 text-[#5f6b6f]">
-              Rompi utility warna navy dengan aksen magenta, logo NEMPO di dada dan tulisan besar di punggung. Banyak kantong, pas buat crew dan anggota komunitas.
+              Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang "n" besar di punggung. Banyak kantong, pas buat crew dan anggota komunitas.
             </p>
             <ul className="space-y-1.5 text-sm text-[#182b39]">
               <li>• Kantong depan + saku ritsleting</li>
