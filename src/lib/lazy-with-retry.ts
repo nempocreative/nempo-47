@@ -1,7 +1,7 @@
 import { lazy, type ComponentType } from "react";
 
 const RELOAD_KEY = "nempo-chunk-reload-at";
-const RELOAD_WINDOW_MS = 30_000;
+const RELOAD_WINDOW_MS = 10_000;
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
