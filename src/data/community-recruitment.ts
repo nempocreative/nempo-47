@@ -13,11 +13,16 @@ export const interestOptions = [
   "Event Management",
 ] as const;
 
+/** Pilihan kategori asal pendaftar — satu sumber untuk formulir. */
+export const originOptions = ["Sekolah", "Kuliah", "Umum"] as const;
+
 export type CommunityApplication = {
   full_name: string;
   email: string;
   whatsapp: string;
   interest: string;
+  origin_type: string;
+  origin_name?: string;
   reason?: string;
 };
 
@@ -29,6 +34,7 @@ export function buildApplicationMessage(app: CommunityApplication) {
     `Nama: ${app.full_name}`,
     `WhatsApp: ${app.whatsapp}`,
     `Email: ${app.email}`,
+    `Asal: ${app.origin_type}${app.origin_name ? ` — ${app.origin_name}` : ""}`,
     `Minat: ${app.interest}`,
   ];
   if (app.reason) lines.push(`Cerita: ${app.reason}`);
