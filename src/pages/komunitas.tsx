@@ -21,6 +21,15 @@ import communityMusicImage from "@/assets/komunitas-musik.jpg";
 import communityArtImage from "@/assets/komunitas-seni.jpg";
 import communityCreatorImage from "@/assets/komunitas-kreator.jpg";
 import communityTalentImage from "@/assets/komunitas-talent.jpg";
+import kegiatanDapoer from "@/assets/kalamuda-kegiatan-dapoer-nyunda.webp";
+import kegiatanMakan from "@/assets/kalamuda-kegiatan-makan-bersama.webp";
+import kegiatanPodcast from "@/assets/kalamuda-kegiatan-podcast-malam.webp";
+
+const kegiatanPhotos = [
+  { src: kegiatanDapoer, caption: "Dapoer Nyunda" },
+  { src: kegiatanMakan, caption: "Makan bersama" },
+  { src: kegiatanPodcast, caption: "Rekaman podcast malam" },
+];
 
 const focusAreas = [
   {
@@ -402,6 +411,26 @@ export default function KomunitasPage() {
                 Lihat kegiatan Kala Muda
                 <ArrowUpRight className="h-4 w-4" />
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== KEGIATAN ===== */}
+        <section className="bg-white">
+          <div className="mx-auto max-w-7xl px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8">
+            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a62f78]">
+              Kegiatan
+            </span>
+            <h2 className="mt-2 text-2xl font-black tracking-[-0.035em] text-[#37215b] sm:text-3xl lg:text-4xl">
+              Momen bersama Kala Muda
+            </h2>
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3">
+              {kegiatanPhotos.map((p) => (
+                <figure key={p.caption} className="overflow-hidden rounded-3xl border border-[#e5e2f5] bg-[#faf9ff]">
+                  <img src={p.src} alt={p.caption} loading="lazy" decoding="async" width={720} height={1280} className="aspect-[3/4] w-full object-cover" />
+                  <figcaption className="px-4 py-3 text-sm font-bold text-[#37215b]">{p.caption}</figcaption>
+                </figure>
+              ))}
             </div>
           </div>
         </section>
