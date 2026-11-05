@@ -13,8 +13,8 @@ const products = [
   {
     name: "Rompi Lapangan Nempo",
     image: rompiLapanganImage,
-    front: lapDepan.url,
-    back: lapBelakang.url,
+    front: lapDepan,
+    back: lapBelakang,
     desc: "Rompi crew lapangan dengan webbing modular di depan, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
     features: [
       "Holster HT di dada + kantong HP",
@@ -27,8 +27,8 @@ const products = [
   {
     name: "Rompi Nempo",
     image: rompiImage,
-    front: nmpDepan.url,
-    back: nmpBelakang.url,
+    front: nmpDepan,
+    back: nmpBelakang,
     desc: "Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang \"n\" besar di punggung, ditemani logo kecil KALA MUDA.",
     features: ["Kantong depan + saku ritsleting", "Strap samping bisa disesuaikan", "Lapisan dalam jaring, adem dipakai"],
   },
