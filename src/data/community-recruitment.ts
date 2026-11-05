@@ -16,6 +16,9 @@ export const interestOptions = [
 /** Pilihan kategori asal pendaftar — satu sumber untuk formulir. */
 export const originOptions = ["Sekolah", "Kuliah", "Umum"] as const;
 
+/** Pilihan hobi; "Lainnya" diisi manual. */
+export const hobbyOptions = ["Tari", "Bernyanyi", "Musik", "Lainnya"] as const;
+
 export type CommunityApplication = {
   full_name: string;
   email: string;
@@ -23,6 +26,7 @@ export type CommunityApplication = {
   interest: string;
   origin_type: string;
   origin_name?: string;
+  hobby?: string;
   reason?: string;
 };
 
@@ -37,6 +41,7 @@ export function buildApplicationMessage(app: CommunityApplication) {
     `Asal: ${app.origin_type}${app.origin_name ? ` — ${app.origin_name}` : ""}`,
     `Minat: ${app.interest}`,
   ];
+  if (app.hobby) lines.push(`Hobi: ${app.hobby}`);
   if (app.reason) lines.push(`Cerita: ${app.reason}`);
   return lines.join("\n");
 }
