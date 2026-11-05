@@ -2,18 +2,18 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
 import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
-import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo.jpg";
+import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo-v2.jpg";
 
 const products = [
   {
     name: "Rompi Lapangan Nempo",
     image: rompiLapanganImage,
-    desc: "Rompi crew lapangan dengan webbing modular, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
+    desc: "Rompi crew lapangan dengan webbing modular di depan, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
     features: [
       "Holster HT di dada + kantong HP",
       "Slot pulpen/spidol, gantungan lakban dan D-ring karabiner",
       "Kantong kargo besar + kantong botol jaring di samping",
-      "Webbing modular depan-belakang + pouch punggung",
+      "Webbing modular di depan, punggung polos dengan logo besar",
       "Strip reflektif buat kerja malam",
     ],
   },
