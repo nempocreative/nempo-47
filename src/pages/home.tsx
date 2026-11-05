@@ -2443,6 +2443,7 @@ export default function Home() {
         {/* ══ BRAND PARTNERS ══════════════════════════════════════════════════════ */}
         {(() => {
           const brands = partnersDb.length > 0 ? partnersDb : [
+            { name: "Good Story Cafe", color: "#c8a24a" },
             { name: "Temu Tarung",  color: "#e63946" },
             { name: "Kopi Jaya",    color: "#c77c3c" },
             { name: "Domusa",       color: "#7b61ff" },
