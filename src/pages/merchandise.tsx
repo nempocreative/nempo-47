@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
-import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
-import lapDepan from "@/assets/rompi-manekin-lapangan-depan.webp";
-import lapBelakang from "@/assets/rompi-manekin-lapangan-belakang.webp";
-import nmpDepan from "@/assets/rompi-manekin-nempo-depan.webp";
-import nmpBelakang from "@/assets/rompi-manekin-nempo-belakang.webp";
-import rompiLapanganImage from "@/assets/merch-rompi-lapangan-nempo-v2.jpg";
+
+// Foto putaran 360°: 8 sudut (0°, 45°, …, 315°) rompi yang dipakai manekin.
+const lapanganFrames = Object.values(
+  import.meta.glob<string>("/src/assets/rompi-putar-lapangan-*.webp", { eager: true, import: "default" }),
+);
+const nempoFrames = Object.values(
+  import.meta.glob<string>("/src/assets/rompi-putar-nempo-*.webp", { eager: true, import: "default" }),
+);
 
 const products = [
   {
     name: "Rompi Lapangan Nempo",
-    image: rompiLapanganImage,
-    front: lapDepan,
-    back: lapBelakang,
+    frames: lapanganFrames,
     desc: "Rompi crew lapangan dengan webbing modular di depan, aksen gradasi biru-ungu Kala Muda dan strip reflektif. Semua alat penting di lapangan punya tempatnya sendiri.",
     features: [
       "Holster HT di dada + kantong HP",
@@ -26,46 +26,99 @@ const products = [
   },
   {
     name: "Rompi Nempo",
-    image: rompiImage,
-    front: nmpDepan,
-    back: nmpBelakang,
+    frames: nempoFrames,
     desc: "Rompi utility warna navy dengan aksen gradasi biru-ungu khas Kala Muda, logo nempo di dada dan lambang \"n\" besar di punggung, ditemani logo kecil KALA MUDA.",
     features: ["Kantong depan + saku ritsleting", "Strap samping bisa disesuaikan", "Lapisan dalam jaring, adem dipakai"],
   },
 ];
 
-// Lapisan siluet berbentuk lonjong (bukan balok) supaya badan manekin terlihat bulat saat berputar.
-const DEPTH = 26;
-const LAYERS = Array.from({ length: 20 }, (_, i) => {
-  const z = -DEPTH + (i * (2 * DEPTH)) / 19;
-  const round = Math.sqrt(Math.max(0, 1 - (z / (DEPTH + 4)) ** 2));
-  return { z, scale: 0.6 + 0.4 * round };
-});
+const SECONDS_PER_ANGLE = 0.85;
+const FADE = 0.11;
+const LABELS = ["depan", "serong kiri", "samping kiri", "serong belakang", "belakang", "serong belakang", "samping kanan", "serong kanan"];
 
-function VestSpinner({ front, back, name }: { front: string; back: string; name: string }) {
+function VestSpinner({ frames, name }: { frames: string[]; name: string }) {
   const [paused, setPaused] = useState(false);
+  const imgs = useRef<(HTMLImageElement | null)[]>([]);
+  const pos = useRef(0);
+  const dragging = useRef<{ x: number; start: number; moved: boolean } | null>(null);
+
+  useEffect(() => {
+    const n = frames.length;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let raf = 0;
+    let last = performance.now();
+    const render = () => {
+      const p = ((pos.current % n) + n) % n;
+      imgs.current.forEach((el, i) => {
+        if (!el) return;
+        let d = p - i;
+        if (d > n / 2) d -= n;
+        if (d < -n / 2) d += n;
+        // Tahan tiap sudut sebentar lalu berpindah halus ke sudut berikutnya.
+        const t = Math.abs(d);
+        const op = Math.min(1, Math.max(0, (0.5 + FADE - t) / (2 * FADE)));
+        el.style.opacity = String(op);
+        el.style.transform = `rotateY(${(-d * 22).toFixed(2)}deg)`;
+        el.style.zIndex = String(Math.round((1 - Math.min(t, 1)) * 10));
+      });
+    };
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      if (!paused && !reduce && !dragging.current) pos.current += dt / SECONDS_PER_ANGLE;
+      render();
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [frames.length, paused]);
+
   return (
-    <div className="merch-scene relative flex flex-col items-center overflow-hidden px-6 pb-6 pt-14">
+    <div className="merch-scene relative flex flex-col items-center overflow-hidden px-6 pb-6 pt-10">
       <span aria-hidden className="merch-glow" />
       <button
         type="button"
-        onClick={() => setPaused((v) => !v)}
         className="merch-stage"
         aria-label={paused ? `Putar lagi ${name}` : `Hentikan putaran ${name}`}
+        onPointerDown={(e) => {
+          dragging.current = { x: e.clientX, start: pos.current, moved: false };
+          e.currentTarget.setPointerCapture(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+          const g = dragging.current;
+          if (!g) return;
+          const dx = e.clientX - g.x;
+          if (Math.abs(dx) > 4) g.moved = true;
+          pos.current = g.start - dx / 45;
+        }}
+        onPointerUp={() => {
+          const g = dragging.current;
+          dragging.current = null;
+          if (g && !g.moved) setPaused((v) => !v);
+        }}
+        onPointerCancel={() => {
+          dragging.current = null;
+        }}
       >
-        <div className="merch-float">
-          <div className={`merch-spin ${paused ? "is-paused" : ""}`}>
-            {LAYERS.map(({ z, scale }) => (
-              <img key={z} src={front} alt="" aria-hidden className="merch-face merch-edge" style={{ transform: `translateZ(${z}px) scaleX(${scale})` }} />
-            ))}
-            <img src={front} alt={`${name} tampak depan`} className="merch-face merch-front" />
-            <img src={back} alt={`${name} tampak belakang`} className="merch-face merch-back" />
-          </div>
+        <div className={`merch-float ${paused ? "is-paused" : ""}`}>
+          {frames.map((src, i) => (
+            <img
+              key={src}
+              ref={(el) => {
+                imgs.current[i] = el;
+              }}
+              src={src}
+              alt={`${name} tampak ${LABELS[i] ?? ""}`}
+              draggable={false}
+              className="merch-face"
+              style={{ opacity: i === 0 ? 1 : 0 }}
+            />
+          ))}
         </div>
         <span aria-hidden className="merch-shadow" />
       </button>
       <p className="relative mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#c7cdf5]">
-        360° · {paused ? "Ketuk untuk memutar" : "Ketuk untuk berhenti"}
+        360° · {paused ? "Ketuk untuk memutar" : "Ketuk untuk berhenti"} · Geser untuk memutar
       </p>
     </div>
   );
@@ -88,7 +141,7 @@ export default function MerchandisePage() {
 
         {products.map((p) => (
         <article key={p.name} className="mt-8 overflow-hidden rounded-3xl border border-[#dce4fb] bg-white shadow-sm md:grid md:grid-cols-[1fr_1fr] md:items-stretch">
-          <VestSpinner front={p.front} back={p.back} name={p.name} />
+          <VestSpinner frames={p.frames} name={p.name} />
           <div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
             <span className="w-fit rounded-full bg-[#182b39] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">Segera hadir</span>
             <h2 className="text-2xl font-black text-[#182b39]">{p.name}</h2>
@@ -111,20 +164,16 @@ export default function MerchandisePage() {
       <style>{`
         .merch-scene { background: radial-gradient(120% 90% at 50% 20%, #2b2f8f 0%, #1a1c55 45%, #0f1030 100%); align-self: stretch; justify-content: center; }
         .merch-glow { position: absolute; top: 18%; left: 50%; width: 70%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle, rgba(110,75,180,.55), rgba(37,99,235,.25) 45%, transparent 70%); filter: blur(10px); animation: merch-pulse 4s ease-in-out infinite; }
-        .merch-stage { perspective: 1100px; width: min(70vw, 290px); aspect-ratio: 3 / 4; position: relative; cursor: pointer; background: none; border: 0; padding: 0; }
+        .merch-stage { perspective: 1400px; width: min(70vw, 300px); aspect-ratio: 3 / 4; position: relative; cursor: grab; background: none; border: 0; padding: 0; touch-action: pan-y; user-select: none; }
+        .merch-stage:active { cursor: grabbing; }
         .merch-float { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-float 4s ease-in-out infinite; }
-        .merch-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: merch-rotate 9s linear infinite; }
-        .merch-spin.is-paused, .merch-scene:has(.is-paused) .merch-float { animation-play-state: paused; }
-        .merch-face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-        .merch-edge { filter: brightness(0) invert(.09); }
-        .merch-front { transform: translateZ(28px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-        .merch-back { transform: rotateY(180deg) translateZ(28px); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-        .merch-shadow { position: absolute; left: 20%; right: 20%; bottom: -14px; height: 16px; border-radius: 50%; background: rgba(0,0,0,.55); filter: blur(8px); animation: merch-shadow 4s ease-in-out infinite; }
-        @keyframes merch-rotate { from { transform: rotateX(-6deg) rotateY(0deg); } to { transform: rotateX(-6deg) rotateY(360deg); } }
+        .merch-float.is-paused, .merch-scene:has(.is-paused) .merch-shadow { animation-play-state: paused; }
+        .merch-face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; will-change: opacity, transform; }
+        .merch-shadow { position: absolute; left: 22%; right: 22%; bottom: 2%; height: 16px; border-radius: 50%; background: rgba(0,0,0,.55); filter: blur(8px); animation: merch-shadow 4s ease-in-out infinite; }
         @keyframes merch-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes merch-shadow { 0%,100% { transform: scaleX(1); opacity: .9; } 50% { transform: scaleX(.8); opacity: .55; } }
         @keyframes merch-pulse { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
-        @media (prefers-reduced-motion: reduce) { .merch-spin, .merch-float, .merch-shadow, .merch-glow { animation: none; } }
+        @media (prefers-reduced-motion: reduce) { .merch-float, .merch-shadow, .merch-glow { animation: none; } }
       `}</style>
     </Layout>
   );
