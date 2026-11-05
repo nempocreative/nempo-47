@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/seo";
 import { Link } from "@/lib/wouter";
-import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v3.jpg";
+import rompiImage from "@/assets/merch-rompi-nempo-kalamuda-v5.jpg";
 
 export default function MerchandisePage() {
   return (
